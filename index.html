@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Homemade Goodness</title>
-  <meta name="description" content="Homemade chocolates, snacks and treats.">
+  <title>homemadewithlove by Neha • Homemade treats</title>
+  <meta name="description" content="homemadewithlove by Neha — homemade chocolates, snacks and treats, made with love. Order on WhatsApp.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
     <div class="container nav">
-      <a class="brand" href="index.html">Homemade <span>Goodness</span></a>
+      <a class="brand" href="index.html"><span class="brand-script">homemade</span><span class="brand-love">withlove</span></a>
       <a class="admin-link" href="admin.html">Admin</a>
     </div>
   </header>
@@ -18,13 +18,19 @@
   <main>
     <section class="hero">
       <div class="container hero-inner">
-        <div>
+        <div class="hero-copy-wrap">
           <p class="eyebrow">MADE AT HOME • MADE WITH LOVE</p>
-          <h1>Delicious homemade treats, made fresh.</h1>
-          <p class="hero-copy">Chocolates, snacks and other homemade favourites — available for order on WhatsApp.</p>
-          <a class="btn primary" href="#products">Browse products</a>
+          <h1>Little treats.<br><em>Lots of love.</em></h1>
+          <p class="hero-copy">Handmade chocolates, snacks and other favourites — freshly prepared and ready to order on WhatsApp.</p>
+          <a class="btn primary" href="#products">Explore the treats <span>→</span></a>
         </div>
-        <div class="hero-art" aria-hidden="true">🍫<span>🥜</span><span>🍪</span></div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-circle">♥</div>
+          <div class="hero-food food-one">🍫</div>
+          <div class="hero-food food-two">🥜</div>
+          <div class="hero-food food-three">🍪</div>
+          <p>made with love</p>
+        </div>
       </div>
     </section>
 
@@ -33,6 +39,7 @@
         <div>
           <p class="eyebrow">OUR MENU</p>
           <h2>Freshly made favourites</h2>
+          <p class="section-subtitle">Pick your favourite and order directly on WhatsApp.</p>
         </div>
         <div class="filters">
           <button class="filter active" data-category="All">All</button>
@@ -45,11 +52,21 @@
       <div id="status" class="status">Loading products…</div>
       <div id="product-grid" class="product-grid"></div>
     </section>
+
+    <section class="love-note">
+      <div class="container love-note-inner">
+        <span class="big-heart">♥</span>
+        <div>
+          <p class="eyebrow">A LITTLE SOMETHING SPECIAL</p>
+          <h2>Homemade tastes better when it's made with love.</h2>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
     <div class="container footer-inner">
-      <span>© <span id="year"></span> Homemade Goodness</span>
+      <div><strong>homemadewithlove by Neha</strong><br><span>Made with love. Shared with joy.</span></div>
       <span>Order via WhatsApp</span>
     </div>
   </footer>
