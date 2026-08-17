@@ -10,8 +10,8 @@
 <body>
   <header class="topbar">
     <div class="container nav">
-      <a class="brand" href="index.html"><span class="brand-script">HomeMade</span><span class="brand-love">WithLove</span></a>
-      <a class="admin-link" href="admin.html">Admin</a>
+      <a class="brand" href="index.html"><span class="brand-script">homemade</span><span class="brand-love">withlove</span></a>
+      <div class="nav-actions"><button id="cart-button" class="cart-button" type="button">🛒 Cart <span id="cart-count">0</span></button><a class="admin-link" href="admin.html">Admin</a></div>
     </div>
   </header>
 
@@ -64,10 +64,26 @@
     </section>
   </main>
 
+  <div id="cart-overlay" class="cart-overlay hidden" aria-hidden="true">
+    <aside class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+      <div class="cart-head">
+        <div><p class="eyebrow">YOUR ORDER</p><h2 id="cart-title">Shopping cart</h2></div>
+        <button id="cart-close" class="cart-close" type="button" aria-label="Close cart">×</button>
+      </div>
+      <div id="cart-items" class="cart-items"></div>
+      <div id="cart-empty" class="cart-empty">Your cart is empty.<br><span>Add a few treats and order them together on WhatsApp.</span></div>
+      <div class="cart-footer">
+        <div class="cart-total"><span>Total</span><strong id="cart-total">₹0</strong></div>
+        <button id="checkout-whatsapp" class="whatsapp-btn" type="button">Order all on WhatsApp</button>
+        <button id="clear-cart" class="clear-cart" type="button">Clear cart</button>
+      </div>
+    </aside>
+  </div>
+
   <footer>
     <div class="container footer-inner">
-      <div><strong>HomeMadeWithLove by Neha</strong><br><span>Made with love. Shared with joy.</span></div>
-      <span>© <span id="year"></span> HomeMadeWithLove by Neha · Order via WhatsApp</span>
+      <div><strong>homemadewithlove by Neha</strong><br><span>Made with love. Shared with joy.</span></div>
+      <span>© <span id="year"></span> homemadewithlove by Neha · Order via WhatsApp</span>
     </div>
   </footer>
 
