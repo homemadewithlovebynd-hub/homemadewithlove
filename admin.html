@@ -23,7 +23,22 @@
         <label>Email<input id="email" type="email" required autocomplete="email"></label>
         <label>Password<input id="password" type="password" required autocomplete="current-password"></label>
         <button class="btn primary" type="submit">Sign in</button>
+        <button id="forgot-password" class="text-btn" type="button">Forgot password?</button>
         <p id="login-error" class="error"></p>
+        <p id="reset-message" class="message"></p>
+      </form>
+    </section>
+
+    <section id="reset-card" class="admin-card hidden">
+      <p class="eyebrow">PASSWORD RESET</p>
+      <h1>Choose a new password</h1>
+      <p class="muted">Enter a new password for your admin account.</p>
+      <form id="reset-form">
+        <label>New password<input id="new-password" type="password" required minlength="8" autocomplete="new-password"></label>
+        <label>Confirm password<input id="confirm-password" type="password" required minlength="8" autocomplete="new-password"></label>
+        <button class="btn primary" type="submit">Update password</button>
+        <p id="reset-error" class="error"></p>
+        <p id="reset-success" class="message"></p>
       </form>
     </section>
 

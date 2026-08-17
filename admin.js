@@ -3,6 +3,9 @@ const cfg = window.SHOP_CONFIG || {};
 const db = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
 const loginCard = document.getElementById("login-card");
 const dashboard = document.getElementById("dashboard");
+const resetCard = document.getElementById("reset-card");
+const resetMessage = document.getElementById("reset-message");
+const resetError = document.getElementById("reset-error");
 let editingId = null;
 
 async function boot(){
