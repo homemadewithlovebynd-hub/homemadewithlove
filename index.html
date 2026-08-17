@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Homemade Goodness</title>
+  <meta name="description" content="Homemade chocolates, snacks and treats.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="index.html">Homemade <span>Goodness</span></a>
+      <a class="admin-link" href="admin.html">Admin</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <p class="eyebrow">MADE AT HOME • MADE WITH LOVE</p>
+          <h1>Delicious homemade treats, made fresh.</h1>
+          <p class="hero-copy">Chocolates, snacks and other homemade favourites — available for order on WhatsApp.</p>
+          <a class="btn primary" href="#products">Browse products</a>
+        </div>
+        <div class="hero-art" aria-hidden="true">🍫<span>🥜</span><span>🍪</span></div>
+      </div>
+    </section>
+
+    <section id="products" class="products-section container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">OUR MENU</p>
+          <h2>Freshly made favourites</h2>
+        </div>
+        <div class="filters">
+          <button class="filter active" data-category="All">All</button>
+          <button class="filter" data-category="Chocolates">Chocolates</button>
+          <button class="filter" data-category="Snacks">Snacks</button>
+          <button class="filter" data-category="Cookies">Cookies</button>
+          <button class="filter" data-category="Other">Other</button>
+        </div>
+      </div>
+      <div id="status" class="status">Loading products…</div>
+      <div id="product-grid" class="product-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Homemade Goodness</span>
+      <span>Order via WhatsApp</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

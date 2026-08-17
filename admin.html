@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin • Homemade Goodness</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="index.html">Homemade <span>Goodness</span></a>
+      <a class="admin-link" href="index.html">View shop</a>
+    </div>
+  </header>
+
+  <main class="admin-page container">
+    <section id="login-card" class="admin-card">
+      <p class="eyebrow">ADMIN</p>
+      <h1>Sign in</h1>
+      <p class="muted">Only the shop administrator can add or edit products.</p>
+      <form id="login-form">
+        <label>Email<input id="email" type="email" required autocomplete="email"></label>
+        <label>Password<input id="password" type="password" required autocomplete="current-password"></label>
+        <button class="btn primary" type="submit">Sign in</button>
+        <p id="login-error" class="error"></p>
+      </form>
+    </section>
+
+    <section id="dashboard" class="hidden">
+      <div class="dashboard-head">
+        <div>
+          <p class="eyebrow">PRODUCTS</p>
+          <h1>Manage your shop</h1>
+        </div>
+        <button id="logout" class="btn secondary">Sign out</button>
+      </div>
+
+      <div class="admin-layout">
+        <div class="admin-card">
+          <h2 id="form-title">Add product</h2>
+          <form id="product-form">
+            <input id="product-id" type="hidden">
+            <label>Product name<input id="name" required maxlength="100" placeholder="Homemade Dark Chocolate"></label>
+            <label>Category
+              <select id="category">
+                <option>Chocolates</option><option>Snacks</option><option>Cookies</option><option>Other</option>
+              </select>
+            </label>
+            <label>Price (₹)<input id="price" type="number" min="0" step="1" required placeholder="200"></label>
+            <label>Description<textarea id="description" rows="4" maxlength="500" placeholder="Short description"></textarea></label>
+            <label>Product image<input id="image" type="file" accept="image/png,image/jpeg,image/webp"></label>
+            <label class="check"><input id="available" type="checkbox" checked> Available</label>
+            <div class="form-actions">
+              <button class="btn primary" type="submit">Save product</button>
+              <button id="cancel-edit" class="btn secondary hidden" type="button">Cancel edit</button>
+            </div>
+            <p id="form-message" class="message"></p>
+          </form>
+        </div>
+
+        <div class="admin-card">
+          <div class="list-head"><h2>Current products</h2><span id="count" class="pill">0</span></div>
+          <div id="admin-products"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
