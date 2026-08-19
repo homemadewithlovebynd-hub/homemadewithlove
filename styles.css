@@ -1,6 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap");
 *{box-sizing:border-box}
 :root{--ink:#34251e;--muted:#78665c;--line:#eaded4;--cream:#fffaf5;--paper:#fff;--accent:#3e2920;--soft:#f3e2d4;--rose:#b66f61}
-body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--cream)}
+body{margin:0;font-family:"Nunito",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--cream)}
 a{text-decoration:none;color:inherit}.container{width:min(1120px,92%);margin:auto}
 .topbar{position:sticky;top:0;z-index:10;background:#fffaf5ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav{height:72px;display:flex;align-items:center;justify-content:space-between}
@@ -52,3 +53,7 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:#806e64;font-size:.
 .modal-overlay{position:fixed;inset:0;background:#2a1d1880;z-index:200;display:grid;place-items:center;padding:20px}.auth-modal{width:min(430px,94vw);background:#fffaf5;border-radius:20px;padding:28px;position:relative;box-shadow:0 25px 80px #0003}.modal-close{position:absolute;right:15px;top:13px;border:0;background:#f1e7df;border-radius:50%;width:34px;height:34px;font-size:1.4rem;cursor:pointer}.auth-modal h2{margin:0 0 6px;font-size:1.8rem}.auth-modal form{display:grid;gap:13px;margin-top:18px}.full{width:100%}.center{text-align:center;width:100%}.form-message{min-height:20px;color:#7b6255;font-size:.85rem}
 @media(max-width:900px){.main-nav{display:none}.hero-inner{padding:35px}.hero-art{width:430px}.feature-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.hero{max-width:calc(100% - 18px)}.hero-inner{padding:32px 22px;min-height:0}.hero h1{font-size:2.6rem}.hero-art{display:none}.feature-grid{grid-template-columns:1fr 1fr}.nav{gap:4px}.brand{font-size:.92rem}.login-button{font-size:.8rem;padding:7px}.cart-button{padding:8px 9px}.arrival-runner{height:32px}}
+
+.brand-image{display:flex;align-items:center;height:72px}
+.brand-image img{display:block;width:220px;height:auto;max-height:66px;object-fit:contain}
+@media(max-width:700px){.brand-image img{width:185px}.nav{height:64px}.brand-image{height:64px}}
