@@ -22,7 +22,7 @@ async function loadProducts(){
   saveCart(); render(); renderArrivals();
 }
 function render(){
-  const visible=products.filter(p=>category==="All"||p.category===category);
+  const visible=products.filter(p=>category==="All"||(category==="New Arrivals" ? p.new_arrival : p.category===category));
   statusEl.textContent=visible.length?"":"No products available in this category.";
   grid.innerHTML=visible.map(p=>{
     const img=p.image_url||"placeholder.svg", item=cart[p.id], qty=item?item.qty:0;
