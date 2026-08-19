@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin • homemadewithlove by Neha</title>
+  <title>Admin • Homemade Goodness</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
     <div class="container nav">
-      <a class="brand brand-image" href="index.html" aria-label="homemadewithlove by Neha"><img src="logo.png" alt="homemadewithlove by Neha"></a>
+      <a class="brand" href="index.html">Homemade <span>Goodness</span></a>
       <a class="admin-link" href="index.html">View shop</a>
     </div>
   </header>
@@ -23,22 +23,7 @@
         <label>Email<input id="email" type="email" required autocomplete="email"></label>
         <label>Password<input id="password" type="password" required autocomplete="current-password"></label>
         <button class="btn primary" type="submit">Sign in</button>
-        <button id="forgot-password" class="text-btn" type="button">Forgot password?</button>
         <p id="login-error" class="error"></p>
-        <p id="reset-message" class="message"></p>
-      </form>
-    </section>
-
-    <section id="reset-card" class="admin-card hidden">
-      <p class="eyebrow">PASSWORD RESET</p>
-      <h1>Choose a new password</h1>
-      <p class="muted">Enter a new password for your admin account.</p>
-      <form id="reset-form">
-        <label>New password<input id="new-password" type="password" required minlength="8" autocomplete="new-password"></label>
-        <label>Confirm password<input id="confirm-password" type="password" required minlength="8" autocomplete="new-password"></label>
-        <button class="btn primary" type="submit">Update password</button>
-        <p id="reset-error" class="error"></p>
-        <p id="reset-success" class="message"></p>
       </form>
     </section>
 
@@ -66,7 +51,6 @@
             <label>Description<textarea id="description" rows="4" maxlength="500" placeholder="Short description"></textarea></label>
             <label>Product image<input id="image" type="file" accept="image/png,image/jpeg,image/webp"></label>
             <label class="check"><input id="available" type="checkbox" checked> Available</label>
-<label class="check"><input id="new-arrival" type="checkbox"> Show in New Arrivals banner</label>
             <div class="form-actions">
               <button class="btn primary" type="submit">Save product</button>
               <button id="cancel-edit" class="btn secondary hidden" type="button">Cancel edit</button>
