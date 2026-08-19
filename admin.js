@@ -154,7 +154,8 @@ form.addEventListener("submit", async e => {
     category: document.getElementById("category").value,
     price: Number(document.getElementById("price").value),
     description: document.getElementById("description").value.trim(),
-    available: document.getElementById("available").checked
+    available: document.getElementById("available").checked,
+    new_arrival: document.getElementById("new-arrival").checked
   };
   if (imageUrl) payload.image_url = imageUrl;
 
@@ -190,7 +191,7 @@ async function loadAdminProducts() {
       <img class="admin-thumb" src="${esc(p.image_url || "placeholder.svg")}" alt="">
       <div class="admin-info">
         <strong>${esc(p.name)}</strong>
-        <small>₹${Number(p.price).toLocaleString("en-IN")} • ${esc(p.category)} • ${p.available ? "Available" : "Hidden"}</small>
+        <small>₹${Number(p.price).toLocaleString("en-IN")} • ${esc(p.category)} • ${p.available ? "Available" : "Out of Stock"}${p.new_arrival ? " • New Arrival" : ""}</small>
       </div>
       <div class="admin-actions">
         <button class="small-btn" onclick="editProduct('${p.id}')">Edit</button>
@@ -210,6 +211,7 @@ window.editProduct = async id => {
   document.getElementById("price").value = data.price;
   document.getElementById("description").value = data.description || "";
   document.getElementById("available").checked = data.available;
+  document.getElementById("new-arrival").checked = !!data.new_arrival;
   document.getElementById("cancel-edit").classList.remove("hidden");
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
@@ -225,6 +227,7 @@ function resetForm() {
   editingId = null;
   form.reset();
   document.getElementById("available").checked = true;
+  document.getElementById("new-arrival").checked = false;
   document.getElementById("form-title").textContent = "Add product";
   document.getElementById("cancel-edit").classList.add("hidden");
 }
