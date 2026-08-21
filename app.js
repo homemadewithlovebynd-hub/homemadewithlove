@@ -34,8 +34,8 @@ function render(){
     const remaining=Math.max(0,Number(p.stock_quantity||0)-qty);
     return `<article class="product-card ${stock?"":"sold-out"}>
       <div class="image-wrap"><img class="product-image" src="${esc(img)}" alt="${esc(p.name)}" loading="lazy">
-      ${p.new_arrival?'<span class="product-badge new">New Arrival</span>':''}
-      ${!stock?'<span class="product-badge stock">Out of Stock</span>':''}</div>
+      ${p.new_arrival?'<span class="product-badge new" style="position:absolute!important;top:13px!important;left:13px!important;z-index:99999!important;display:block!important;visibility:visible!important;opacity:1!important;">New Arrival</span>':''}
+      ${!stock?'<span class="product-badge stock" style="position:absolute!important;top:13px!important;left:13px!important;z-index:99999!important;display:block!important;visibility:visible!important;opacity:1!important;">Out of Stock</span>':''}</div>
       <div class="product-body"><div class="product-meta"><h3 class="product-name">${esc(p.name)}</h3><div class="price">₹${Number(p.price).toLocaleString("en-IN")}</div></div>
       <p class="description">${esc(p.description||"")}</p>
       ${stock ? `<div class="stock-note">${remaining>0 && remaining<=5 ? `Only ${remaining} left` : ""}</div><div class="add-row">${qty?`<div class="qty-control"><button class="qty-btn" data-action="minus" data-id="${esc(p.id)}">−</button><strong>${qty}</strong><button class="qty-btn" data-action="plus" data-id="${esc(p.id)}" ${qty>=Number(p.stock_quantity)?"disabled":""}>+</button></div><button class="add-btn added" data-action="add" data-id="${esc(p.id)}">${qty} added</button>`:`<button class="add-btn" data-action="add" data-id="${esc(p.id)}">Add to cart</button>`}</div>`
