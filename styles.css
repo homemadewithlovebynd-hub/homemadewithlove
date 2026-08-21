@@ -48,7 +48,11 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:#806e64;font-size:.
 .arrival-runner{background:#6b2e1b;color:#fff;overflow:hidden;white-space:nowrap;height:35px;display:flex;align-items:center}.arrival-track{display:flex;min-width:max-content;animation:runner 24s linear infinite;font-size:.82rem;font-weight:750;letter-spacing:.03em}.arrival-track span{padding-right:55px}@keyframes runner{to{transform:translateX(-50%)}}
 .new-badge{display:inline-block;background:#e85c77;color:#fff;border-radius:999px;padding:7px 13px;font-size:.75rem;font-weight:850;letter-spacing:.05em}
 .hero{background:#f9e4dd;border-radius:24px;margin:12px auto 0;max-width:calc(100% - 28px);overflow:hidden}.hero-inner{min-height:330px;display:flex;align-items:center;justify-content:space-between;padding:42px 55px}.hero h1{font-size:3.4rem;line-height:1.02;margin:15px 0 13px;color:#542617}.hero h1 em{font-style:normal;color:#d8546d}.hero-copy{max-width:500px;color:#6d5044;line-height:1.55}.hero-art{width:540px;height:300px;position:relative;background:#f5cfc4;border-radius:22px;box-shadow:inset 0 0 0 1px #fff8}.hero-photo{position:absolute;width:190px;height:160px;background:#fff;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 15px 35px #6e422620;font-size:4rem}.hero-photo b{font-size:.66rem;letter-spacing:.08em;color:#6e3929;margin-top:4px}.hero-photo.chocolate{left:35px;top:35px;transform:rotate(-5deg)}.hero-photo.cookies{right:40px;top:18px;transform:rotate(5deg)}.hero-photo.snack{left:170px;bottom:15px;transform:rotate(2deg)}.hero-heart{position:absolute;left:245px;top:105px;font-size:4.5rem;color:#e75c78;z-index:3}
-.image-wrap{position:relative;isolation:isolate}.product-badge{position:absolute;top:13px;left:13px;z-index:5;display:block;border-radius:999px;padding:7px 12px;font-size:.75rem;font-weight:850;color:#fff;pointer-events:none;opacity:1;visibility:visible}.product-badge.new{background:#e85c77}.product-badge.stock{background:#829225}.sold-out .product-image{filter:saturate(.65)}.out-stock-btn{width:100%;border:0;border-radius:10px;background:#efedda;color:#7d801d;padding:11px;font-weight:800}
+/* Permanent product badges: explicit stacking above the product image */
+.image-wrap{position:relative;isolation:isolate;overflow:hidden}
+.image-wrap>.product-image{position:relative;z-index:1;display:block}
+.image-wrap>.product-badge{position:absolute!important;top:13px!important;left:13px!important;z-index:10!important;display:inline-block!important;visibility:visible!important;opacity:1!important;transform:none!important;pointer-events:none!important}
+.product-badge{position:absolute;top:13px;left:13px;border-radius:999px;padding:7px 12px;font-size:.75rem;font-weight:850;color:#fff}.product-badge.new{background:#e85c77}.product-badge.stock{background:#829225}.sold-out .product-image{filter:saturate(.65)}.out-stock-btn{width:100%;border:0;border-radius:10px;background:#efedda;color:#7d801d;padding:11px;font-weight:800}
 .feature-strip{background:#faf1ea;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0}.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.feature-grid>div{display:flex;align-items:center;gap:13px}.feature-grid span{width:52px;height:52px;border-radius:50%;background:#fff;display:grid;place-items:center;color:#e75c78;font-size:1.4rem}.feature-grid strong,.feature-grid small{display:block}.feature-grid small{color:#806e64;margin-top:3px}.love-note{text-align:center;padding:22px 0}.love-note h2{margin:0;color:#df5b73;font-size:1rem}
 .modal-overlay{position:fixed;inset:0;background:#2a1d1880;z-index:200;display:grid;place-items:center;padding:20px}.auth-modal{width:min(430px,94vw);background:#fffaf5;border-radius:20px;padding:28px;position:relative;box-shadow:0 25px 80px #0003}.modal-close{position:absolute;right:15px;top:13px;border:0;background:#f1e7df;border-radius:50%;width:34px;height:34px;font-size:1.4rem;cursor:pointer}.auth-modal h2{margin:0 0 6px;font-size:1.8rem}.auth-modal form{display:grid;gap:13px;margin-top:18px}.full{width:100%}.center{text-align:center;width:100%}.form-message{min-height:20px;color:#7b6255;font-size:.85rem}
 @media(max-width:900px){.main-nav{display:none}.hero-inner{padding:35px}.hero-art{width:430px}.feature-grid{grid-template-columns:repeat(2,1fr)}}
@@ -62,22 +66,3 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:#806e64;font-size:.
 @media(max-width:520px){.product-body{padding:12px}.product-meta{display:block}.product-name{font-size:.95rem;line-height:1.25}.price{font-size:.9rem;margin-top:5px}.description{font-size:.78rem;min-height:54px;margin:8px 0 12px}.add-row{gap:6px}.add-btn,.out-stock-btn{padding:9px 6px;font-size:.76rem}.product-image{aspect-ratio:1/1}}
 .stock-note{min-height:18px;font-size:.75rem;color:#a35f45;font-weight:700}.admin-order{display:flex;justify-content:space-between;gap:14px;align-items:center;border-top:1px solid #eee3db;padding:15px 0}.admin-order:first-child{border-top:0}.admin-order small{display:block;color:#806e64;margin-top:3px}.admin-order p{margin:7px 0;color:#5f5149;font-size:.9rem}.order-status{display:inline-block;border-radius:999px;padding:6px 10px;font-size:.75rem;font-weight:700;text-transform:capitalize}.order-status.confirmed{background:#e7f5e9;color:#237a3b}.order-status.cancelled{background:#f8e7e7;color:#a51d2d}.order-status.pending{background:#fff1dc;color:#9a5b16}
 @media(max-width:520px){.admin-order{align-items:flex-start;flex-direction:column}.admin-order .admin-actions{width:100%}.admin-order .admin-actions button{flex:1}}
-
-
-/* Permanent product badges — visible without hover */
-.image-wrap .product-badge,
-.product-card .product-badge,
-.product-card:hover .product-badge,
-.image-wrap:hover .product-badge {
-  position:absolute !important;
-  top:13px !important;
-  left:13px !important;
-  z-index:9999 !important;
-  display:block !important;
-  visibility:visible !important;
-  opacity:1 !important;
-  pointer-events:none !important;
-  transform:none !important;
-}
-.product-card .product-badge.new { background:#e85c77 !important; color:#fff !important; }
-.product-card .product-badge.stock { background:#829225 !important; color:#fff !important; }
