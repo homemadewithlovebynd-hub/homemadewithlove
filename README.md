@@ -9,3 +9,6 @@ Updated package includes:
 - New Arrival and Out of Stock badges permanently visible over product images (not hover-only)
 
 Keep the existing `config.js` values. The database migration in `inventory.sql` has already been successfully executed if you are updating from the previous inventory-fixed package; do not run it again unless needed.
+
+
+Badge fix: New Arrival and Out of Stock badges are forced permanently visible, including on mobile and desktop, independent of hover state.

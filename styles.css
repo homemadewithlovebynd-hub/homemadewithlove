@@ -62,3 +62,22 @@ footer{border-top:1px solid var(--line);padding:28px 0;color:#806e64;font-size:.
 @media(max-width:520px){.product-body{padding:12px}.product-meta{display:block}.product-name{font-size:.95rem;line-height:1.25}.price{font-size:.9rem;margin-top:5px}.description{font-size:.78rem;min-height:54px;margin:8px 0 12px}.add-row{gap:6px}.add-btn,.out-stock-btn{padding:9px 6px;font-size:.76rem}.product-image{aspect-ratio:1/1}}
 .stock-note{min-height:18px;font-size:.75rem;color:#a35f45;font-weight:700}.admin-order{display:flex;justify-content:space-between;gap:14px;align-items:center;border-top:1px solid #eee3db;padding:15px 0}.admin-order:first-child{border-top:0}.admin-order small{display:block;color:#806e64;margin-top:3px}.admin-order p{margin:7px 0;color:#5f5149;font-size:.9rem}.order-status{display:inline-block;border-radius:999px;padding:6px 10px;font-size:.75rem;font-weight:700;text-transform:capitalize}.order-status.confirmed{background:#e7f5e9;color:#237a3b}.order-status.cancelled{background:#f8e7e7;color:#a51d2d}.order-status.pending{background:#fff1dc;color:#9a5b16}
 @media(max-width:520px){.admin-order{align-items:flex-start;flex-direction:column}.admin-order .admin-actions{width:100%}.admin-order .admin-actions button{flex:1}}
+
+
+/* Permanent product badges — visible without hover */
+.image-wrap .product-badge,
+.product-card .product-badge,
+.product-card:hover .product-badge,
+.image-wrap:hover .product-badge {
+  position:absolute !important;
+  top:13px !important;
+  left:13px !important;
+  z-index:9999 !important;
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:none !important;
+  transform:none !important;
+}
+.product-card .product-badge.new { background:#e85c77 !important; color:#fff !important; }
+.product-card .product-badge.stock { background:#829225 !important; color:#fff !important; }
