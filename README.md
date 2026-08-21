@@ -80,3 +80,9 @@ For a larger admin team, replace the broad authenticated policies with a dedicat
 ## WhatsApp
 
 The customer does not pay on the site. Clicking "Order on WhatsApp" opens WhatsApp with the selected product and price already filled in.
+
+
+## Security and mobile grid fix
+- `admin-only-rls.sql` makes product insert/update/delete and product-image writes admin-only for the configured admin UUID.
+- `admin.js` also blocks non-admin Supabase accounts from opening the admin dashboard.
+- Mobile product cards use a two-column grid instead of collapsing to one column.

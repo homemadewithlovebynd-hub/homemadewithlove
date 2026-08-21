@@ -1,6 +1,11 @@
 const { createClient } = supabase;
 const cfg = window.SHOP_CONFIG || {};
 const db = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+const ADMIN_USER_ID = "a7ebcd42-0d22-43cd-b8b3-06e131d7cbed";
+
+function isAdminSession(session) {
+  return !!session?.user?.id && session.user.id === ADMIN_USER_ID;
+}
 
 const loginCard = document.getElementById("login-card");
 const dashboard = document.getElementById("dashboard");
@@ -17,6 +22,14 @@ function showLogin() {
   loginCard.classList.remove("hidden");
 }
 function showDashboard() {
+  // Never render the product-management dashboard for non-admin accounts.
+  dashboard.classList.remove("hidden");
+  loginCard.classList.add("hidden");
+  resetCard.classList.add("hidden");
+  loadAdminProducts();
+  return;
+}
+function showDashboardLegacy() {
   loginCard.classList.add("hidden");
   resetCard.classList.add("hidden");
   dashboard.classList.remove("hidden");
@@ -32,8 +45,14 @@ function clearMessages() {
 }
 
 // Supabase detects the recovery session from the URL and emits PASSWORD_RECOVERY.
-db.auth.onAuthStateChange((event) => {
+db.auth.onAuthStateChange(async (event, session) => {
   if (event === "PASSWORD_RECOVERY") {
+    if (!isAdminSession(session)) {
+      await db.auth.signOut();
+      showLogin();
+      loginError.textContent = "This account does not have administrator access.";
+      return;
+    }
     clearMessages();
     showReset();
   }
@@ -41,8 +60,12 @@ db.auth.onAuthStateChange((event) => {
 
 async function boot() {
   const { data: { session } } = await db.auth.getSession();
-  if (session) showDashboard();
-  else showLogin();
+  if (isAdminSession(session)) {
+    showDashboard();
+  } else {
+    if (session) await db.auth.signOut();
+    showLogin();
+  }
 }
 
 document.getElementById("login-form").addEventListener("submit", async e => {
@@ -57,8 +80,18 @@ document.getElementById("login-form").addEventListener("submit", async e => {
     password: passwordValue
   });
 
-  if (error) loginError.textContent = error.message;
-  else showDashboard();
+  if (error) {
+    loginError.textContent = error.message;
+    return;
+  }
+
+  const { data: { session } } = await db.auth.getSession();
+  if (!isAdminSession(session)) {
+    await db.auth.signOut();
+    loginError.textContent = "This account does not have administrator access.";
+    return;
+  }
+  showDashboard();
 });
 
 // Send the reset email. The user must first enter their admin email in the login form.
