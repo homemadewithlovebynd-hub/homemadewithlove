@@ -27,6 +27,7 @@ function showDashboard() {
   loginCard.classList.add("hidden");
   resetCard.classList.add("hidden");
   loadAdminProducts();
+  loadAdminOrders();
   return;
 }
 function showDashboardLegacy() {
@@ -188,6 +189,7 @@ form.addEventListener("submit", async e => {
     price: Number(document.getElementById("price").value),
     description: document.getElementById("description").value.trim(),
     available: document.getElementById("available").checked,
+    stock_quantity: Math.max(0, Number(document.getElementById("stock-quantity").value || 0)),
     new_arrival: document.getElementById("new-arrival").checked
   };
   if (imageUrl) payload.image_url = imageUrl;
@@ -204,6 +206,7 @@ form.addEventListener("submit", async e => {
   formMessage.textContent = "Saved.";
   resetForm();
   loadAdminProducts();
+  loadAdminOrders();
 });
 
 document.getElementById("cancel-edit").onclick = resetForm;
@@ -224,7 +227,7 @@ async function loadAdminProducts() {
       <img class="admin-thumb" src="${esc(p.image_url || "placeholder.svg")}" alt="">
       <div class="admin-info">
         <strong>${esc(p.name)}</strong>
-        <small>₹${Number(p.price).toLocaleString("en-IN")} • ${esc(p.category)} • ${p.available ? "Available" : "Out of Stock"}${p.new_arrival ? " • New Arrival" : ""}</small>
+        <small>₹${Number(p.price).toLocaleString("en-IN")} • ${esc(p.category)} • ${p.available && Number(p.stock_quantity || 0) > 0 ? `Stock: ${Number(p.stock_quantity || 0)}` : "Out of Stock"}${p.new_arrival ? " • New Arrival" : ""}</small>
       </div>
       <div class="admin-actions">
         <button class="small-btn" onclick="editProduct('${p.id}')">Edit</button>
@@ -244,6 +247,7 @@ window.editProduct = async id => {
   document.getElementById("price").value = data.price;
   document.getElementById("description").value = data.description || "";
   document.getElementById("available").checked = data.available;
+  document.getElementById("stock-quantity").value = Number(data.stock_quantity || 0);
   document.getElementById("new-arrival").checked = !!data.new_arrival;
   document.getElementById("cancel-edit").classList.remove("hidden");
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -256,10 +260,40 @@ window.deleteProduct = async id => {
   else loadAdminProducts();
 };
 
+
+async function loadAdminOrders() {
+  const el = document.getElementById("admin-orders");
+  if (!el) return;
+  const { data, error } = await db.from("orders").select("id,customer_name,customer_email,status,total,created_at,order_items(product_name,quantity,unit_price,line_total)").order("created_at", { ascending: false });
+  if (error) { el.innerHTML = `<p class="error">${esc(error.message)}</p>`; return; }
+  if (!data?.length) { el.innerHTML = "<p class='muted'>No orders yet.</p>"; return; }
+  el.innerHTML = data.map(o => {
+    const items = (o.order_items || []).map(i => `${esc(i.product_name)} × ${i.quantity}`).join(", ");
+    const date = new Date(o.created_at).toLocaleString("en-IN");
+    const action = o.status === "pending"
+      ? `<button class="small-btn" onclick="confirmOrder('${o.id}')">Confirm</button><button class="small-btn danger" onclick="cancelOrder('${o.id}')">Cancel</button>`
+      : `<span class="order-status ${esc(o.status)}">${esc(o.status)}</span>`;
+    return `<div class="admin-order"><div><strong>Order ${esc(o.id.slice(0,8))}</strong><small>${esc(date)} • ${esc(o.customer_name || "Guest")}${o.customer_email ? ` • ${esc(o.customer_email)}` : ""}</small><p>${items || "No items"}</p><strong>₹${Number(o.total).toLocaleString("en-IN")}</strong></div><div class="admin-actions">${action}</div></div>`;
+  }).join("");
+}
+window.confirmOrder = async id => {
+  if (!confirm("Confirm this order? Stock is already reserved.")) return;
+  const { error } = await db.rpc("confirm_order", { p_order_id: id });
+  if (error) alert(error.message); else loadAdminOrders();
+};
+window.cancelOrder = async id => {
+  if (!confirm("Cancel this order and return its reserved stock to inventory?")) return;
+  const { error } = await db.rpc("cancel_order", { p_order_id: id });
+  if (error) alert(error.message); else { loadAdminProducts(); loadAdminOrders(); }
+};
+const refreshOrders = document.getElementById("refresh-orders");
+if (refreshOrders) refreshOrders.onclick = loadAdminOrders;
+
 function resetForm() {
   editingId = null;
   form.reset();
   document.getElementById("available").checked = true;
+  document.getElementById("stock-quantity").value = 0;
   document.getElementById("new-arrival").checked = false;
   document.getElementById("form-title").textContent = "Add product";
   document.getElementById("cancel-edit").classList.add("hidden");

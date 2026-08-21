@@ -63,6 +63,7 @@
               </select>
             </label>
             <label>Price (₹)<input id="price" type="number" min="0" step="1" required placeholder="200"></label>
+            <label>Available stock<input id="stock-quantity" type="number" min="0" step="1" required value="0" placeholder="20"></label>
             <label>Description<textarea id="description" rows="4" maxlength="500" placeholder="Short description"></textarea></label>
             <label>Product image<input id="image" type="file" accept="image/png,image/jpeg,image/webp"></label>
             <label class="check"><input id="available" type="checkbox" checked> Available</label>
@@ -78,6 +79,11 @@
         <div class="admin-card">
           <div class="list-head"><h2>Current products</h2><span id="count" class="pill">0</span></div>
           <div id="admin-products"></div>
+        </div>
+
+        <div class="admin-card orders-card">
+          <div class="list-head"><h2>Orders</h2><button id="refresh-orders" class="small-btn" type="button">Refresh</button></div>
+          <div id="admin-orders"><p class="muted">Loading orders…</p></div>
         </div>
       </div>
     </section>

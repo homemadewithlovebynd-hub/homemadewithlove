@@ -86,3 +86,17 @@ The customer does not pay on the site. Clicking "Order on WhatsApp" opens WhatsA
 - `admin-only-rls.sql` makes product insert/update/delete and product-image writes admin-only for the configured admin UUID.
 - `admin.js` also blocks non-admin Supabase accounts from opening the admin dashboard.
 - Mobile product cards use a two-column grid instead of collapsing to one column.
+
+## Inventory + order reservation
+
+1. In Supabase SQL Editor, run `inventory.sql` after the existing `admin-only-rls.sql`.
+2. In Admin, enter the real available stock for every product. Existing products will have stock 0 after the migration, so set their actual stock before publishing.
+3. Customers can add only up to the current stock.
+4. Clicking **Order all on WhatsApp** creates a pending order and atomically reserves/decrements stock. The WhatsApp message contains the order ID.
+5. In Admin > Orders, **Confirm** keeps the reserved stock consumed. **Cancel** returns the reserved quantities to inventory.
+6. A product automatically displays **Out of Stock** when stock reaches 0.
+
+Important: because WhatsApp is an external service, the site cannot know whether the customer actually sent the WhatsApp message. The pending/confirm/cancel workflow prevents that ambiguity from permanently consuming stock.
+
+### Inventory SQL correction
+The included `inventory.sql` creates/replaces the order RPC functions before granting function permissions. This avoids the `42883 function ... does not exist` error that can occur when running the migration on a fresh or partially migrated database. It is also safe to re-run after a partial migration.
