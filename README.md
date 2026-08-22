@@ -1,6 +1,6 @@
-# Homemade Goodness — free-hosted product catalogue
+# Handmade Goodness — free-hosted product catalogue
 
-A simple mobile-friendly homemade-products shop with:
+A simple mobile-friendly handmade-products shop with:
 - Product catalogue
 - Categories
 - Prices in INR
