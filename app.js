@@ -1,20 +1,16 @@
-const { createClient } = supabase;
+const supabaseLib = window.supabase;
+const createClient = supabaseLib?.createClient;
 const cfg = window.SHOP_CONFIG || {};
-let db = null;
-try {
-  if (cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY && !cfg.SUPABASE_URL.includes("PASTE_YOUR")) {
-    db = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
-  }
-} catch (e) {
-  console.error("Supabase configuration error:", e);
-}
+const db = (createClient && cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY && !String(cfg.SUPABASE_URL).includes("PASTE_YOUR"))
+  ? createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY)
+  : null;
 const grid = document.getElementById("product-grid");
 const statusEl = document.getElementById("status");
 let products = [];
 let category = "All";
 let cart = JSON.parse(localStorage.getItem("homemadewithlove_cart") || "{}");
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const yearEl=document.getElementById("year"); if(yearEl) yearEl.textContent=new Date().getFullYear();
 function saveCart(){localStorage.setItem("homemadewithlove_cart",JSON.stringify(cart));renderCart();}
 function cartCount(){return Object.values(cart).reduce((s,i)=>s+i.qty,0);}
 function cartTotal(){return Object.values(cart).reduce((s,i)=>s+i.price*i.qty,0);}
@@ -22,7 +18,11 @@ function getProduct(id){return products.find(p=>p.id===id);}
 
 async function loadProducts(){
   statusEl.textContent="Loading products…";
-  if(!db){ statusEl.textContent="Products are unavailable until your existing config.js is restored."; return; }
+  if(!db){
+    statusEl.textContent="Supabase is not configured. Keep your existing working config.js file.";
+    console.error("Missing Supabase configuration. Do not replace your existing config.js.");
+    return;
+  }
   const {data,error}=await db.from("products").select("*").order("created_at",{ascending:false});
   if(error){statusEl.textContent="Unable to load products. Check your Supabase setup.";console.error(error);return;}
   products=data||[];
@@ -53,6 +53,7 @@ function render(){
       ${stock ? `<div class="stock-note">${remaining>0 && remaining<=5 ? `Only ${remaining} left` : ""}</div><div class="add-row">${qty?`<div class="qty-control"><button class="qty-btn" data-action="minus" data-id="${esc(p.id)}">−</button><strong>${qty}</strong><button class="qty-btn" data-action="plus" data-id="${esc(p.id)}" ${qty>=Number(p.stock_quantity)?"disabled":""}>+</button></div><button class="add-btn added" data-action="add" data-id="${esc(p.id)}">${qty} added</button>`:`<button class="add-btn" data-action="add" data-id="${esc(p.id)}">Add to cart</button>`}</div>`
       : `<button class="out-stock-btn" disabled>Out of Stock</button>`}</div></article>`;
   }).join("");
+  grid.querySelectorAll("img.product-image").forEach(img=>img.addEventListener("error",()=>{if(!img.dataset.fallback){img.dataset.fallback="1";img.src="placeholder.svg";img.classList.add("image-error");}}));
   updateCartBadge();
 }
 function addToCart(id){
@@ -86,7 +87,6 @@ document.getElementById("cart-overlay").onclick=e=>{if(e.target.id==="cart-overl
 document.getElementById("clear-cart").onclick=()=>{cart={};saveCart();render();};
 
 document.getElementById("checkout-whatsapp").onclick=async()=>{
-  if(!db){ alert("Please restore your working Supabase config.js first."); return; }
   const entries=Object.values(cart);if(!entries.length)return;
   const btn=document.getElementById("checkout-whatsapp");btn.disabled=true;btn.textContent="Checking stock…";
   const {data:latest,error:stockError}=await db.from("products").select("id,name,price,available,stock_quantity").in("id",entries.map(i=>i.id));
@@ -114,49 +114,31 @@ const authOverlay=document.getElementById("auth-overlay");
 const loginPanel=document.getElementById("auth-login"),signupPanel=document.getElementById("auth-signup"),accountPanel=document.getElementById("auth-account");
 function openAuth(){authOverlay.classList.remove("hidden");} function closeAuth(){authOverlay.classList.add("hidden");}
 function setAuthPanel(p){loginPanel.classList.toggle("hidden",p!=="login");signupPanel.classList.toggle("hidden",p!=="signup");accountPanel.classList.toggle("hidden",p!=="account");}
-document.getElementById("auth-button").onclick=async()=>{
-  if(!db){ openAuth(); setAuthPanel("login"); document.getElementById("customer-login-message").textContent="Please restore your working Supabase config.js first."; return; }const {data:{session}}=await db.auth.getSession();if(session){document.getElementById("account-name").textContent=`Hello, ${session.user.user_metadata?.full_name||"there"}!`;document.getElementById("account-email").textContent=session.user.email||"";setAuthPanel("account");}else setAuthPanel("login");openAuth();};
+document.getElementById("auth-button").onclick=async()=>{if(!db){openAuth();setAuthPanel("login");return;}const {data:{session}}=await db.auth.getSession();if(session){document.getElementById("account-name").textContent=`Hello, ${session.user.user_metadata?.full_name||"there"}!`;document.getElementById("account-email").textContent=session.user.email||"";setAuthPanel("account");}else setAuthPanel("login");openAuth();};
 document.getElementById("auth-close").onclick=closeAuth;authOverlay.onclick=e=>{if(e.target===authOverlay)closeAuth();};
 document.getElementById("show-signup").onclick=()=>{document.getElementById("customer-login-message").textContent="";setAuthPanel("signup");};
 document.getElementById("show-login").onclick=()=>{document.getElementById("customer-signup-message").textContent="";setAuthPanel("login");};
-document.getElementById("login-form").onsubmit=async e=>{
-  if(!db) return;e.preventDefault();const m=document.getElementById("customer-login-message");m.textContent="Signing in…";const {error}=await db.auth.signInWithPassword({email:document.getElementById("customer-email").value.trim(),password:document.getElementById("customer-password").value});if(error)m.textContent=error.message;else{m.textContent="";closeAuth();updateAuthButton();}};
-document.getElementById("signup-form").onsubmit=async e=>{
-  if(!db) return;e.preventDefault();const m=document.getElementById("customer-signup-message");m.textContent="Creating account…";const {data,error}=await db.auth.signUp({email:document.getElementById("signup-email").value.trim(),password:document.getElementById("signup-password").value,data:{full_name:document.getElementById("signup-name").value.trim()},options:{emailRedirectTo:window.location.origin+"/"}});if(error){m.textContent=error.message;return;}if(data.session){m.textContent="Account created!";setTimeout(()=>{closeAuth();updateAuthButton();},500);}else m.textContent="Account created. Please check your email to confirm your account.";};
-document.getElementById("logout-customer").onclick=async()=>{if(!db)return; await db.auth.signOut();closeAuth();updateAuthButton();};
-async function updateAuthButton(){if(!db){document.getElementById("auth-button").textContent="My Account";return;} const {data:{session}}=await db.auth.getSession();document.getElementById("auth-button").textContent=session?"♙ My Account":"♙ Login / Sign up";} if(db) db.auth.onAuthStateChange(()=>updateAuthButton());
+document.getElementById("login-form").onsubmit=async e=>{e.preventDefault();const m=document.getElementById("customer-login-message");m.textContent="Signing in…";const {error}=await db.auth.signInWithPassword({email:document.getElementById("customer-email").value.trim(),password:document.getElementById("customer-password").value});if(error)m.textContent=error.message;else{m.textContent="";closeAuth();updateAuthButton();}};
+document.getElementById("signup-form").onsubmit=async e=>{e.preventDefault();const m=document.getElementById("customer-signup-message");m.textContent="Creating account…";const {data,error}=await db.auth.signUp({email:document.getElementById("signup-email").value.trim(),password:document.getElementById("signup-password").value,data:{full_name:document.getElementById("signup-name").value.trim()},options:{emailRedirectTo:window.location.origin+"/"}});if(error){m.textContent=error.message;return;}if(data.session){m.textContent="Account created!";setTimeout(()=>{closeAuth();updateAuthButton();},500);}else m.textContent="Account created. Please check your email to confirm your account.";};
+document.getElementById("logout-customer").onclick=async()=>{await db.auth.signOut();closeAuth();updateAuthButton();};
+async function updateAuthButton(){if(!db){document.getElementById("auth-button").textContent="♙ Login / Sign up";return;}const {data:{session}}=await db.auth.getSession();document.getElementById("auth-button").textContent=session?"♙ My Account":"♙ Login / Sign up";} if(db) db.auth.onAuthStateChange(()=>updateAuthButton());
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
 loadProducts();renderCart();updateAuthButton();
 
-/* Hero carousel */
-const heroSlides=[...document.querySelectorAll(".hero-slide")];
-const heroDots=[...document.querySelectorAll(".hero-dot")];
-let heroIndex=0;
-let heroTimer=null;
-function showHeroSlide(index){
-  if(!heroSlides.length)return;
-  heroIndex=(index+heroSlides.length)%heroSlides.length;
-  heroSlides.forEach((slide,i)=>slide.classList.toggle("active",i===heroIndex));
-  heroDots.forEach((dot,i)=>dot.classList.toggle("active",i===heroIndex));
-}
-function startHeroTimer(){clearInterval(heroTimer);heroTimer=setInterval(()=>showHeroSlide(heroIndex+1),6000);}
-document.querySelector(".hero-prev")?.addEventListener("click",()=>{showHeroSlide(heroIndex-1);startHeroTimer();});
-document.querySelector(".hero-next")?.addEventListener("click",()=>{showHeroSlide(heroIndex+1);startHeroTimer();});
-heroDots.forEach(dot=>dot.addEventListener("click",()=>{showHeroSlide(Number(dot.dataset.slide));startHeroTimer();}));
-showHeroSlide(0);startHeroTimer();
-
 /* Site navigation and editable content */
 const sideMenu=document.getElementById("side-menu"),menuOverlay=document.getElementById("menu-overlay");
-function setMenu(open){sideMenu.classList.toggle("open",open);menuOverlay.classList.toggle("hidden",!open);sideMenu.setAttribute("aria-hidden",String(!open));document.getElementById("menu-button").setAttribute("aria-expanded",String(open));}
+function setMenu(open){document.body.classList.toggle("sidebar-open",open);sideMenu.classList.toggle("open",open);menuOverlay.classList.toggle("hidden",!open);sideMenu.setAttribute("aria-hidden",String(!open));document.getElementById("menu-button").setAttribute("aria-expanded",String(open));}
 document.getElementById("menu-button").onclick=()=>setMenu(true);document.getElementById("menu-close").onclick=()=>setMenu(false);menuOverlay.onclick=()=>setMenu(false);document.querySelectorAll(".side-nav a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
 const searchPanel=document.getElementById("search-panel"),searchInput=document.getElementById("site-search");
 document.getElementById("search-button").onclick=()=>{searchPanel.classList.remove("hidden");searchInput.focus();};document.getElementById("search-close").onclick=()=>searchPanel.classList.add("hidden");
 searchInput.addEventListener("input",()=>{const q=searchInput.value.trim().toLowerCase();document.querySelectorAll("#product-grid .product-card").forEach(card=>{card.style.display=!q||card.textContent.toLowerCase().includes(q)?"":"none";});});
+const headerSearch=document.getElementById("header-site-search");
+headerSearch?.addEventListener("input",()=>{const q=headerSearch.value.trim().toLowerCase();document.querySelectorAll("#product-grid .product-card").forEach(card=>{card.style.display=!q||card.textContent.toLowerCase().includes(q)?"":"none";});});
 document.querySelectorAll("[data-jump-category]").forEach(a=>a.addEventListener("click",()=>{const c=a.dataset.jumpCategory;document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.category===c));category=c;render();}));
 document.getElementById("orders-account-button")?.addEventListener("click",()=>document.getElementById("auth-button").click());
 function renderRichText(target,text){const el=document.getElementById(target);if(!el)return;el.innerHTML=String(text||"").split(/\n\s*\n/).map(p=>`<p>${esc(p).replace(/\n/g,"<br>")}</p>`).join("");}
 async function loadSiteContent(){
-  if(!db) return;
+  if(!db)return;
   const {data,error}=await db.from("site_content").select("slug,title,body");
   if(error){console.warn("Site content table not available yet:",error.message);return;}
   const map=Object.fromEntries((data||[]).map(x=>[x.slug,x]));

@@ -325,4 +325,4 @@ async function loadSiteContentAdmin(){
   }));
 }
 
-
+boot();

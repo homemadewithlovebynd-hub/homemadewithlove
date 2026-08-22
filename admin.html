@@ -58,32 +58,37 @@
       </div>
 
       <div class="admin-layout">
-        <div class="admin-card product-editor-card">
-          <div class="list-head"><div><p class="eyebrow">PRODUCT CATALOGUE</p><h2 id="form-title">Add product</h2></div><span class="pill">Admin only</span></div>
-          <p class="muted">Add a product with pricing, stock, category and a clean product image.</p>
+        <div class="admin-card">
+          <h2 id="form-title">Add product</h2>
           <form id="product-form">
             <input id="product-id" type="hidden">
-            <div class="product-form-grid">
-              <label class="form-field">Product name<input id="name" required maxlength="100" placeholder="Homemade Dark Chocolate"></label>
-              <label class="form-field">Category<select id="category"><option>Chocolates</option><option>Snacks</option><option>Cookies</option><option>Other</option></select></label>
-              <label class="form-field">Price (₹)<input id="price" type="number" min="0" step="1" required placeholder="200"></label>
-              <label class="form-field">Available stock<input id="stock-quantity" type="number" min="0" step="1" required value="0" placeholder="20"></label>
-              <label class="form-field full">Description<textarea id="description" rows="4" maxlength="500" placeholder="Short description customers will see on the product card"></textarea></label>
-              <div class="form-field full upload-box"><strong>Product image</strong><p class="muted">Use a clear square JPG, PNG or WebP image. Maximum 5 MB.</p><input id="image" type="file" accept="image/png,image/jpeg,image/webp"></div>
+            <label>Product name<input id="name" required maxlength="100" placeholder="Homemade Dark Chocolate"></label>
+            <label>Category
+              <select id="category">
+                <option>Chocolates</option><option>Snacks</option><option>Cookies</option><option>Other</option>
+              </select>
+            </label>
+            <label>Price (₹)<input id="price" type="number" min="0" step="1" required placeholder="200"></label>
+            <label>Available stock<input id="stock-quantity" type="number" min="0" step="1" required value="0" placeholder="20"></label>
+            <label>Description<textarea id="description" rows="4" maxlength="500" placeholder="Short description"></textarea></label>
+            <label>Product image<input id="image" type="file" accept="image/png,image/jpeg,image/webp"></label>
+            <label class="check"><input id="available" type="checkbox" checked> Available</label>
+<label class="check"><input id="new-arrival" type="checkbox"> Show in New Arrivals banner</label>
+            <div class="form-actions">
+              <button class="btn primary" type="submit">Save product</button>
+              <button id="cancel-edit" class="btn secondary hidden" type="button">Cancel edit</button>
             </div>
-            <div class="check-row"><label class="check"><input id="available" type="checkbox" checked> Available for sale</label><label class="check"><input id="new-arrival" type="checkbox"> Show in New Arrivals</label></div>
-            <div class="form-actions"><button class="btn primary" type="submit">Save product</button><button id="cancel-edit" class="btn secondary hidden" type="button">Cancel edit</button></div>
             <p id="form-message" class="message"></p>
           </form>
         </div>
 
         <div class="admin-card">
-          <div class="list-head"><div><p class="eyebrow">CATALOGUE</p><h2>Current products</h2></div><span id="count" class="pill">0</span></div>
-          <div id="admin-products"><p class="muted">Loading products…</p></div>
+          <div class="list-head"><h2>Current products</h2><span id="count" class="pill">0</span></div>
+          <div id="admin-products"></div>
         </div>
 
         <div class="admin-card orders-card">
-          <div class="list-head"><div><p class="eyebrow">ORDERS</p><h2>Recent orders</h2></div><button id="refresh-orders" class="small-btn" type="button">Refresh</button></div>
+          <div class="list-head"><h2>Orders</h2><button id="refresh-orders" class="small-btn" type="button">Refresh</button></div>
           <div id="admin-orders"><p class="muted">Loading orders…</p></div>
         </div>
       </div>
