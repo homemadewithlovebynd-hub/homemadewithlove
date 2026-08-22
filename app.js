@@ -109,6 +109,30 @@ document.getElementById("checkout-whatsapp").onclick=async()=>{
 document.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");category=b.dataset.category;render();});
 function renderArrivals(){const arrivals=products.filter(p=>p.new_arrival&&p.available&&Number(p.stock_quantity||0)>0);const runner=document.getElementById("arrival-runner"),track=document.getElementById("arrival-track");if(!arrivals.length){runner.classList.add("hidden");return;}const text=arrivals.map(p=>`♡ NEW ARRIVAL: ${esc(p.name)}`).join("   •   ");track.innerHTML=`<span>${text}</span><span>${text}</span>`;runner.classList.remove("hidden");}
 
+
+/* Hero carousel */
+(function initHeroCarousel(){
+  const slides=[...document.querySelectorAll('.hero-slide')];
+  const dots=[...document.querySelectorAll('#hero-dots button')];
+  const prev=document.getElementById('hero-prev');
+  const next=document.getElementById('hero-next');
+  if(!slides.length||!prev||!next)return;
+  let index=0, timer;
+  function show(i){
+    index=(i+slides.length)%slides.length;
+    slides.forEach((slide,n)=>slide.classList.toggle('active',n===index));
+    dots.forEach((dot,n)=>dot.classList.toggle('active',n===index));
+  }
+  function restart(){clearInterval(timer);timer=setInterval(()=>show(index+1),6500);}
+  prev.addEventListener('click',()=>{show(index-1);restart();});
+  next.addEventListener('click',()=>{show(index+1);restart();});
+  dots.forEach((dot,n)=>dot.addEventListener('click',()=>{show(n);restart();}));
+  const carousel=document.querySelector('.hero-carousel');
+  carousel?.addEventListener('mouseenter',()=>clearInterval(timer));
+  carousel?.addEventListener('mouseleave',restart);
+  show(0);restart();
+})();
+
 /* Customer authentication */
 const authOverlay=document.getElementById("auth-overlay");
 const loginPanel=document.getElementById("auth-login"),signupPanel=document.getElementById("auth-signup"),accountPanel=document.getElementById("auth-account");

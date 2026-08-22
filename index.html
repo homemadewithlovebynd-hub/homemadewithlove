@@ -24,7 +24,7 @@
   </div>
 </header>
 
-<aside id="side-menu" class="side-menu reference-side-menu" aria-hidden="false">
+<aside id="side-menu" class="side-menu reference-side-menu" aria-hidden="true">
   <div class="sidebar-logo-wrap"><img src="brand-logo-transparent.png" alt="handmadewithlove by Neha" class="sidebar-logo"></div>
   <div class="side-menu-head"><button id="menu-close" class="icon-button" type="button" aria-label="Close menu">×</button></div>
   <nav class="side-nav reference-side-nav" aria-label="Shop menu">
@@ -50,12 +50,28 @@
   <section class="hero reference-hero">
     <div class="reference-hero-copy">
       <span class="hero-kicker">FRESH <b>•</b> HANDMADE <b>•</b> PREMIUM</span>
-      <h1>Handmade<br>goodness,<br><em>made with love.</em> <span class="hero-heart">♡</span></h1>
+      <h1>Handmade<br>goodness,<br><em>made with love.</em></h1>
       <p class="hero-copy">Delicious treats crafted with the finest ingredients and lots of love.</p>
       <a class="btn primary reference-shop-btn" href="#products">Shop Now <span>›</span></a>
-      <div class="hero-dots"><i class="active"></i><i></i><i></i></div>
+      <div class="hero-dots" id="hero-dots" aria-label="Banner navigation">
+        <button class="active" type="button" aria-label="Banner 1"></button>
+        <button type="button" aria-label="Banner 2"></button>
+        <button type="button" aria-label="Banner 3"></button>
+        <button type="button" aria-label="Banner 4"></button>
+        <button type="button" aria-label="Banner 5"></button>
+      </div>
     </div>
-    <div class="reference-hero-photo"><img src="hero-food.jpg" alt="Handmade chocolate treats"></div>
+    <div class="reference-hero-photo hero-carousel" aria-label="Featured handmade treats">
+      <button class="hero-arrow hero-arrow-prev" id="hero-prev" type="button" aria-label="Previous banner">‹</button>
+      <div class="hero-slides" id="hero-slides">
+        <figure class="hero-slide active"><img src="hero-food.jpg" alt="Handmade chocolate brownies and treats"></figure>
+        <figure class="hero-slide"><img src="cat-chocolates.jpg" alt="Handmade chocolates and truffles"></figure>
+        <figure class="hero-slide"><img src="cat-cookies.jpg" alt="Freshly baked handmade cookies"></figure>
+        <figure class="hero-slide"><img src="cat-snacks.jpg" alt="Traditional handmade snack mix"></figure>
+        <figure class="hero-slide"><img src="cat-new-arrivals.jpg" alt="New handmade arrivals and gift treats"></figure>
+      </div>
+      <button class="hero-arrow hero-arrow-next" id="hero-next" type="button" aria-label="Next banner">›</button>
+    </div>
   </section>
 
   <section class="category-section">
