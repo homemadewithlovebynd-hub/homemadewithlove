@@ -1,21 +1,27 @@
-# handmadewithlove reference landing page — corrected
+# handmadewithlove by Neha — refined storefront
 
-This package fixes the previous landing-page issues:
-- sidebar menu now reliably opens/closes;
-- explicit Admin button links to `admin.html`;
-- the JS no longer crashes because of a missing `#year` element;
-- Supabase initialization is defensive;
-- product image assets are included;
-- sidebar logo is reduced in size.
+This package updates the storefront and admin product form while keeping the existing Supabase/inventory/order logic intact.
 
-## IMPORTANT
-Keep your existing working `config.js` from your current GitHub project. Do NOT replace it with a placeholder. This package intentionally does not include secrets or a real Supabase key.
+## Important
 
-Do NOT rerun inventory SQL just for this frontend update.
+**Keep your existing working `config.js`.** It contains your Supabase URL, anon key and WhatsApp number. This package intentionally does not include `config.js` so you do not accidentally overwrite your working configuration.
 
+Do not run `inventory.sql` again if inventory is already working.
 
-## Final visual refinement
-- Single Cormorant Garamond font throughout the storefront UI.
-- Transparent logo artwork used in sidebar/footer to eliminate the visible rectangle.
-- Admin link moved from the header to the footer.
-- Logo sizing reduced slightly.
+## Included changes
+
+- Warm cream / maroon storefront design
+- Single Cormorant Garamond font throughout the UI
+- Smaller sidebar close (X) button
+- Admin link at the bottom of the sidebar
+- Hero carousel with previous/next controls and three local food illustrations
+- No decorative heart overlay in the hero image area
+- Category section and New Arrival filter retained
+- Product, cart, authentication, WhatsApp ordering and Supabase integration retained
+- More professional Add Product form in Admin
+- Existing Site Content editor retained
+- Existing inventory/order SQL files are unchanged
+
+## Deploy
+
+Replace the website files in your GitHub repository with this package, but **leave your existing `config.js` in place**.
