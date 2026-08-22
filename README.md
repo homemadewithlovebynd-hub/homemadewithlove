@@ -1,108 +1,29 @@
-# Handmade Goodness — free-hosted product catalogue
+# handmadewithlove — Reference Landing Page (fixed)
 
-A simple mobile-friendly handmade-products shop with:
-- Product catalogue
-- Categories
-- Prices in INR
-- WhatsApp ordering
-- Admin login
-- Add/edit/delete products
-- Product image upload
-- Supabase database + storage
+This package fixes the three issues reported:
 
-## Free hosting stack
+1. The left navigation is now genuinely collapsible on desktop and mobile. It is closed by default; the menu button opens it and X closes it.
+2. The logo is smaller while keeping the same logo artwork.
+3. The landing-page hero/category images are bundled with the package and product images have a safe fallback.
 
-- Cloudflare Pages for hosting
-- Supabase Free for database, authentication and image storage
+## IMPORTANT: keep your existing config.js
 
-Both have free tiers. Check current provider limits before launching a busy commercial store.
+This package intentionally does NOT include `config.js` so that your working Supabase URL/key and WhatsApp number are not overwritten.
 
-## 1. Create Supabase project
+When copying the package into your existing GitHub repository, **keep your existing `config.js`**.
 
-Create a free Supabase project.
+Do NOT run `inventory.sql` again.
+Do NOT run any new SQL for this UI fix.
 
-Open SQL Editor and run the complete contents of `supabase.sql`.
+## Files
 
-Then create your admin account:
-Authentication → Users → Add user.
-
-Use the email/password you want for the admin dashboard.
-
-## 2. Configure the website
-
-Copy:
-
-`config.example.js` → `config.js`
-
-Then fill:
-
-- SUPABASE_URL
-- SUPABASE_ANON_KEY
-- WHATSAPP_NUMBER
-
-The WhatsApp number must include the country code, without + or spaces.
-Example: `919876543210`
-
-Never put a Supabase `service_role` key in this website.
-
-## 3. Test locally
-
-You need a local web server (because browser modules/auth can behave differently from file://).
-
-For example with Python:
-
-`python -m http.server 8000`
-
-Then open:
-
-`http://localhost:8000`
-
-## 4. Deploy to Cloudflare Pages
-
-Create a GitHub repository and upload these files.
-
-In Cloudflare Pages:
-- Create application
-- Pages → Connect to Git
-- Select the repository
-- Framework preset: None
-- Build command: leave empty
-- Output directory: `/`
-
-Cloudflare will give you a free `*.pages.dev` URL.
-
-## 5. Important security note
-
-This demo uses Supabase Auth plus RLS. For a single-owner shop, create only your own admin user.
-
-For a larger admin team, replace the broad authenticated policies with a dedicated `admin_users` table and role-based policies.
-
-## WhatsApp
-
-The customer does not pay on the site. Clicking "Order on WhatsApp" opens WhatsApp with the selected product and price already filled in.
-
-
-## Security and mobile grid fix
-- `admin-only-rls.sql` makes product insert/update/delete and product-image writes admin-only for the configured admin UUID.
-- `admin.js` also blocks non-admin Supabase accounts from opening the admin dashboard.
-- Mobile product cards use a two-column grid instead of collapsing to one column.
-
-## Inventory + order reservation
-
-1. In Supabase SQL Editor, run `inventory.sql` after the existing `admin-only-rls.sql`.
-2. In Admin, enter the real available stock for every product. Existing products will have stock 0 after the migration, so set their actual stock before publishing.
-3. Customers can add only up to the current stock.
-4. Clicking **Order all on WhatsApp** creates a pending order and atomically reserves/decrements stock. The WhatsApp message contains the order ID.
-5. In Admin > Orders, **Confirm** keeps the reserved stock consumed. **Cancel** returns the reserved quantities to inventory.
-6. A product automatically displays **Out of Stock** when stock reaches 0.
-
-Important: because WhatsApp is an external service, the site cannot know whether the customer actually sent the WhatsApp message. The pending/confirm/cancel workflow prevents that ambiguity from permanently consuming stock.
-
-### Inventory SQL correction
-The included `inventory.sql` creates/replaces the order RPC functions before granting function permissions. This avoids the `42883 function ... does not exist` error that can occur when running the migration on a fresh or partially migrated database. It is also safe to re-run after a partial migration.
-
-
-Badge fix: styles.css now gives the image and badge explicit stacking layers so New Arrival and Out of Stock remain visible without hover. Inventory/order code is unchanged.
-
-## New storefront navigation + editable content
-Run `site-content.sql` once in Supabase SQL Editor. This creates the public-read/admin-write `site_content` table used for the collapsible left navigation pages and the Admin site-content editor. Inventory SQL does not need to be rerun.
+- `index.html` — landing page
+- `styles.css` — layout/theme/sidebar fixes
+- `app.js` — product loading/navigation fixes
+- `brand-logo.png` — brand logo
+- `hero-food.jpg` — hero image
+- `cat-chocolates.jpg`
+- `cat-cookies.jpg`
+- `cat-snacks.jpg`
+- `cat-new-arrivals.jpg`
+- existing admin/inventory/site-content files retained

@@ -45,6 +45,13 @@
 <div id="search-panel" class="search-panel hidden"><div class="container search-inner"><input id="site-search" type="search" placeholder="Search products…" aria-label="Search products"><button id="search-close" class="icon-button" type="button" aria-label="Close search">×</button></div></div>
 <div id="arrival-runner" class="arrival-runner hidden"><div class="arrival-track" id="arrival-track"></div></div>
 
+<div id="search-panel" class="search-panel hidden">
+  <div class="container search-inner">
+    <input id="site-search" type="search" placeholder="Search products…" aria-label="Search products">
+    <button id="search-close" class="icon-button" type="button" aria-label="Close search">×</button>
+  </div>
+</div>
+
 
 <main id="home" class="reference-home">
   <section class="hero reference-hero">
