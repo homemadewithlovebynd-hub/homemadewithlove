@@ -103,3 +103,6 @@ The included `inventory.sql` creates/replaces the order RPC functions before gra
 
 
 Badge fix: styles.css now gives the image and badge explicit stacking layers so New Arrival and Out of Stock remain visible without hover. Inventory/order code is unchanged.
+
+## New storefront navigation + editable content
+Run `site-content.sql` once in Supabase SQL Editor. This creates the public-read/admin-write `site_content` table used for the collapsible left navigation pages and the Admin site-content editor. Inventory SQL does not need to be rerun.

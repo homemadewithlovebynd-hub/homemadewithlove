@@ -4,23 +4,49 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>handmadewithlove by Neha • Homemade treats</title>
-  <meta name="description" content="handmadewithlove by Neha — homemade chocolates, cookies and Indian snacks, prepared in small batches with care.">
+  <meta name="description" content="handmadewithlove by Neha — homemade chocolates, cookies and snacks, prepared in small batches with care.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="announcement">Freshly made in small batches <span>•</span> Order your favourites on WhatsApp</div>
+
 <header class="topbar">
   <div class="container nav">
-    <a class="brand brand-image" href="index.html" aria-label="handmadewithlove by Neha"><img src="logo.png" alt="handmadewithlove by Neha"></a>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="#home">Home</a><a href="#products">Shop</a><a href="#about">Our Story</a>
-    </nav>
+    <button id="menu-button" class="icon-button menu-button" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+    <a class="brand brand-image" href="#home" aria-label="handmadewithlove by Neha"><img src="logo.png" alt="handmadewithlove by Neha"></a>
     <div class="nav-actions">
-      <button id="auth-button" class="login-button" type="button">Login / Sign up</button>
+      <button id="search-button" class="icon-button search-button" type="button" aria-label="Search">⌕</button>
+      <button id="auth-button" class="login-button" type="button">My Account</button>
       <button id="cart-button" class="cart-button" type="button">Cart <span id="cart-count">0</span></button>
     </div>
   </div>
 </header>
+
+<aside id="side-menu" class="side-menu" aria-hidden="true">
+  <div class="side-menu-head">
+    <strong>handmadewithlove</strong>
+    <button id="menu-close" class="icon-button" type="button" aria-label="Close menu">×</button>
+  </div>
+  <nav class="side-nav" aria-label="Shop menu">
+    <a href="#home">Home</a>
+    <a href="#orders">Orders</a>
+    <a href="#track-order">Track your order</a>
+    <a href="#products">Products</a>
+    <a href="#return-policy">Return Policy</a>
+    <a href="#about">About us</a>
+    <a href="#contact-us">Contact us</a>
+    <a href="#shipping-policy">Shipping Policy</a>
+    <a href="#terms-of-service">Terms of Service</a>
+  </nav>
+</aside>
+<div id="menu-overlay" class="menu-overlay hidden"></div>
+
+<div id="search-panel" class="search-panel hidden">
+  <div class="container search-inner">
+    <input id="site-search" type="search" placeholder="Search products…" aria-label="Search products">
+    <button id="search-close" class="icon-button" type="button" aria-label="Close search">×</button>
+  </div>
+</div>
 
 <div id="arrival-runner" class="arrival-runner hidden"><div class="arrival-track" id="arrival-track"></div></div>
 
@@ -30,30 +56,28 @@
       <div class="hero-copy-wrap">
         <span class="hero-kicker">HANDMADE • FRESH • DELICIOUS</span>
         <h1>Made by hand,<br><em>made with love.</em></h1>
-        <p class="hero-copy">Homemade chocolates, cookies and Indian snacks, prepared in small batches with ingredients chosen with care.</p>
+        <p class="hero-copy">Homemade chocolates, cookies and snacks, prepared in small batches with ingredients chosen with care.</p>
         <div class="hero-actions"><a class="btn primary" href="#products">Shop our treats <span>→</span></a><a class="hero-link" href="#about">Our story</a></div>
         <div class="hero-points"><span>✓ Small batches</span><span>✓ Freshly prepared</span><span>✓ Easy WhatsApp ordering</span></div>
       </div>
       <div class="hero-art" aria-label="Homemade treats">
         <div class="hero-card hero-card-one"><span>🍫</span><strong>Chocolate</strong><small>Rich & indulgent</small></div>
         <div class="hero-card hero-card-two"><span>🍪</span><strong>Cookies</strong><small>Freshly baked</small></div>
-        <div class="hero-card hero-card-three"><span>🥨</span><strong>Indian Snacks</strong><small>Traditional favourites</small></div>
+        <div class="hero-card hero-card-three"><span>🥨</span><strong>Snacks</strong><small>Traditional favourites</small></div>
         <div class="hero-seal">HANDMADE<br><b>WITH LOVE</b></div>
       </div>
     </div>
   </section>
 
   <section class="category-strip container" aria-label="Shop by category">
-    <a href="#products" class="category-tile tile-pink"><span>🍫</span><strong>Chocolates</strong><small>Sweet little indulgences</small></a>
-    <a href="#products" class="category-tile tile-cream"><span>🍪</span><strong>Cookies</strong><small>Freshly baked goodness</small></a>
-    <a href="#products" class="category-tile tile-green"><span>🥨</span><strong>Snacks</strong><small>Homemade savoury bites</small></a>
-    <a href="#products" class="category-tile tile-yellow"><span>✨</span><strong>New Arrivals</strong><small>Our latest creations</small></a>
+    <a href="#products" class="category-tile tile-pink" data-jump-category="Chocolates"><span>🍫</span><strong>Chocolates</strong><small>Sweet little indulgences</small></a>
+    <a href="#products" class="category-tile tile-cream" data-jump-category="Cookies"><span>🍪</span><strong>Cookies</strong><small>Freshly baked goodness</small></a>
+    <a href="#products" class="category-tile tile-green" data-jump-category="Snacks"><span>🥨</span><strong>Snacks</strong><small>Homemade savoury bites</small></a>
+    <a href="#products" class="category-tile tile-yellow" data-jump-category="New Arrival"><span>✨</span><strong>New Arrivals</strong><small>Our latest creations</small></a>
   </section>
 
   <section id="products" class="products-section container">
-    <div class="section-head">
-      <div><p class="eyebrow">SHOP OUR GOODIES</p><h2>Made fresh, just for you</h2><p class="section-subtitle">Discover our homemade favourites and order them together on WhatsApp.</p></div>
-    </div>
+    <div class="section-head"><div><p class="eyebrow">SHOP OUR GOODIES</p><h2>Made fresh, just for you</h2><p class="section-subtitle">Discover our homemade favourites and order them together on WhatsApp.</p></div></div>
     <div class="filters-wrap"><div class="filters">
       <button class="filter active" data-category="All">All</button>
       <button class="filter" data-category="New Arrival">New Arrival</button>
@@ -66,38 +90,29 @@
     <div id="product-grid" class="product-grid"></div>
   </section>
 
-  <section id="about" class="story-section">
+  <section id="orders" class="content-section container" data-content-section="orders"><p class="eyebrow">ORDERS</p><h2>Your orders</h2><div class="content-card"><p>Sign in to your account for a faster checkout. Your current cart can be opened from the Cart button above.</p><button class="btn primary" id="orders-account-button" type="button">Open My Account</button></div></section>
+  <section id="track-order" class="content-section container" data-content-section="track-order"><p class="eyebrow">TRACK YOUR ORDER</p><h2>Track your order</h2><div class="content-card"><p>Enter your order details on WhatsApp to get an update on your order.</p><a class="btn primary" id="track-whatsapp" href="#products">Contact us on WhatsApp</a></div></section>
+
+  <section id="about" class="story-section" data-content-section="about">
     <div class="container story-grid">
       <div class="story-art"><div class="story-circle">♡</div><div class="story-note">Small batches.<br>Big heart.</div></div>
-      <div class="story-copy"><p class="eyebrow">OUR STORY</p><h2>Homemade is more than a recipe.</h2><p>handmadewithlove by Neha is about the little things that make homemade food special — familiar flavours, thoughtful ingredients and the joy of sharing something made by hand.</p><p>Every batch is prepared with care so that what reaches you feels personal, warm and delicious.</p><a class="text-link" href="#products">Explore our treats →</a></div>
+      <div class="story-copy"><p class="eyebrow">ABOUT US</p><h2 id="about-title">Homemade is more than a recipe.</h2><div id="about-content" class="rich-content"><p>handmadewithlove by Neha is about the little things that make homemade food special — familiar flavours, thoughtful ingredients and the joy of sharing something made by hand.</p><p>Every batch is prepared with care so that what reaches you feels personal, warm and delicious.</p></div><a class="text-link" href="#products">Explore our treats →</a></div>
     </div>
   </section>
 
-  <section class="promise-strip"><div class="container promise-grid">
-    <div><span>♡</span><div><strong>Made at home</strong><small>Small-batch preparation</small></div></div>
-    <div><span>✦</span><div><strong>Quality ingredients</strong><small>Chosen with care</small></div></div>
-    <div><span>✓</span><div><strong>Freshly prepared</strong><small>Made with attention</small></div></div>
-    <div><span>◉</span><div><strong>Easy ordering</strong><small>Order together on WhatsApp</small></div></div>
-  </div></section>
-  <section class="love-note"><div class="container"><h2>♡ Thank you for supporting homemade!</h2></div></section>
+  <section id="return-policy" class="content-section container" data-content-section="return-policy"><p class="eyebrow">RETURN POLICY</p><h2 id="return-policy-title">Returns & refunds</h2><div id="return-policy-content" class="content-card rich-content"><p>Please contact us as soon as possible if there is an issue with your order. We will review it and help you with the next steps.</p></div></section>
+  <section id="contact-us" class="content-section container" data-content-section="contact-us"><p class="eyebrow">CONTACT US</p><h2 id="contact-us-title">We'd love to hear from you</h2><div id="contact-us-content" class="content-card rich-content"><p>For questions, custom orders or order updates, please contact us on WhatsApp.</p></div></section>
+  <section id="shipping-policy" class="content-section container" data-content-section="shipping-policy"><p class="eyebrow">SHIPPING POLICY</p><h2 id="shipping-policy-title">Delivery & shipping</h2><div id="shipping-policy-content" class="content-card rich-content"><p>Delivery details, timelines and charges will be shared when your order is confirmed.</p></div></section>
+  <section id="terms-of-service" class="content-section container" data-content-section="terms-of-service"><p class="eyebrow">TERMS OF SERVICE</p><h2 id="terms-of-service-title">Terms of service</h2><div id="terms-of-service-content" class="content-card rich-content"><p>Please contact us if you have any questions about ordering or using this website.</p></div></section>
+
+  <section class="promise-strip"><div class="container promise-grid"><div><span>♡</span><div><strong>Made at home</strong><small>Small-batch preparation</small></div></div><div><span>✦</span><div><strong>Quality ingredients</strong><small>Chosen with care</small></div></div><div><span>✓</span><div><strong>Freshly prepared</strong><small>Made with attention</small></div></div><div><span>◉</span><div><strong>Easy ordering</strong><small>Order together on WhatsApp</small></div></div></div></section>
+  <section class="love-note"><div class="container"><h2>♡ Thank you for supporting handmade!</h2></div></section>
 </main>
 
-<div id="cart-overlay" class="cart-overlay hidden" aria-hidden="true">
-  <aside class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
-    <div class="cart-head"><div><p class="eyebrow">YOUR ORDER</p><h2 id="cart-title">Shopping cart</h2></div><button id="cart-close" class="cart-close" type="button">×</button></div>
-    <div id="cart-items" class="cart-items"></div><div id="cart-empty" class="cart-empty">Your cart is empty.<br><span>Add a few treats and order them together on WhatsApp.</span></div>
-    <div class="cart-footer"><div class="cart-total"><span>Total</span><strong id="cart-total">₹0</strong></div><button id="checkout-whatsapp" class="whatsapp-btn" type="button">Order all on WhatsApp</button><button id="clear-cart" class="clear-cart" type="button">Clear cart</button></div>
-  </aside>
-</div>
+<div id="cart-overlay" class="cart-overlay hidden" aria-hidden="true"><aside class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title"><div class="cart-head"><div><p class="eyebrow">YOUR ORDER</p><h2 id="cart-title">Shopping cart</h2></div><button id="cart-close" class="cart-close" type="button">×</button></div><div id="cart-items" class="cart-items"></div><div id="cart-empty" class="cart-empty">Your cart is empty.<br><span>Add a few treats and order them together on WhatsApp.</span></div><div class="cart-footer"><div class="cart-total"><span>Total</span><strong id="cart-total">₹0</strong></div><button id="checkout-whatsapp" class="whatsapp-btn" type="button">Order all on WhatsApp</button><button id="clear-cart" class="clear-cart" type="button">Clear cart</button></div></aside></div>
 
-<div id="auth-overlay" class="modal-overlay hidden">
-  <section class="auth-modal"><button id="auth-close" class="modal-close" type="button">×</button>
-    <div id="auth-login"><p class="eyebrow">WELCOME</p><h2>Login to your account</h2><p class="muted">Save your details for easier ordering.</p><form id="login-form"><label>Email<input id="customer-email" type="email" required autocomplete="email"></label><label>Password<input id="customer-password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary full" type="submit">Login</button><button id="show-signup" class="text-btn center" type="button">New here? Create an account</button><p id="customer-login-message" class="form-message"></p></form></div>
-    <div id="auth-signup" class="hidden"><p class="eyebrow">CREATE ACCOUNT</p><h2>Join handmadewithlove</h2><p class="muted">Create a simple account for faster future orders.</p><form id="signup-form"><label>Your name<input id="signup-name" type="text" required maxlength="80" autocomplete="name"></label><label>Email<input id="signup-email" type="email" required autocomplete="email"></label><label>Password<input id="signup-password" type="password" required minlength="8" autocomplete="new-password"></label><button class="btn primary full" type="submit">Create account</button><button id="show-login" class="text-btn center" type="button">Already have an account? Login</button><p id="customer-signup-message" class="form-message"></p></form></div>
-    <div id="auth-account" class="hidden"><p class="eyebrow">MY ACCOUNT</p><h2 id="account-name">Hello!</h2><p id="account-email" class="muted"></p><button id="logout-customer" class="btn secondary full" type="button">Sign out</button></div>
-  </section>
-</div>
+<div id="auth-overlay" class="modal-overlay hidden"><section class="auth-modal"><button id="auth-close" class="modal-close" type="button">×</button><div id="auth-login"><p class="eyebrow">WELCOME</p><h2>Login to your account</h2><p class="muted">Save your details for easier ordering.</p><form id="login-form"><label>Email<input id="customer-email" type="email" required autocomplete="email"></label><label>Password<input id="customer-password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary full" type="submit">Login</button><button id="show-signup" class="text-btn center" type="button">New here? Create an account</button><p id="customer-login-message" class="form-message"></p></form></div><div id="auth-signup" class="hidden"><p class="eyebrow">CREATE ACCOUNT</p><h2>Join handmadewithlove</h2><p class="muted">Create a simple account for faster future orders.</p><form id="signup-form"><label>Your name<input id="signup-name" type="text" required maxlength="80" autocomplete="name"></label><label>Email<input id="signup-email" type="email" required autocomplete="email"></label><label>Password<input id="signup-password" type="password" required minlength="8" autocomplete="new-password"></label><button class="btn primary full" type="submit">Create account</button><button id="show-login" class="text-btn center" type="button">Already have an account? Login</button><p id="customer-signup-message" class="form-message"></p></form></div><div id="auth-account" class="hidden"><p class="eyebrow">MY ACCOUNT</p><h2 id="account-name">Hello!</h2><p id="account-email" class="muted"></p><button id="logout-customer" class="btn secondary full" type="button">Sign out</button></div></section></div>
 
-<footer><div class="container footer-inner"><div><strong>handmadewithlove by Neha</strong><br><span>Made with love. Shared with joy.</span></div><div class="footer-links"><a href="#products">Shop</a><a href="#about">Our Story</a><a class="admin-link" href="admin.html">Admin</a></div><span>© <span id="year"></span> handmadewithlove by Neha</span></div></footer>
+<footer><div class="container footer-inner"><div><strong>handmadewithlove by Neha</strong><br><span>Made with love. Shared with joy.</span></div><div class="footer-links"><a href="#products">Products</a><a href="#about">About us</a><a href="#contact-us">Contact us</a><a class="admin-link" href="admin.html">Admin</a></div><span>© <span id="year"></span> handmadewithlove by Neha</span></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="app.js"></script>
 </body></html>

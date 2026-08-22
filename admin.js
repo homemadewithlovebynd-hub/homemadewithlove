@@ -28,6 +28,7 @@ function showDashboard() {
   resetCard.classList.add("hidden");
   loadAdminProducts();
   loadAdminOrders();
+  loadSiteContentAdmin();
   return;
 }
 function showDashboardLegacy() {
@@ -303,6 +304,25 @@ function esc(v) {
   return String(v ?? "").replace(/[&<>"']/g, m => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
   }[m]));
+}
+
+boot();
+
+
+/* Editable storefront sections */
+async function loadSiteContentAdmin(){
+  const contentList=document.getElementById("site-content-list");
+  if(!contentList)return;
+  const {data,error}=await db.from("site_content").select("slug,title,body").order("slug");
+  if(error){contentList.innerHTML=`<p class="error">${esc(error.message)}<br><small>Run the new site-content.sql migration once in Supabase.</small></p>`;return;}
+  contentList.innerHTML=(data||[]).map(row=>`<div class="site-content-row" data-slug="${esc(row.slug)}"><div class="site-content-title"><strong>${esc(row.title)}</strong><small>${esc(row.slug)}</small></div><label>Section title<input class="site-content-input" value="${esc(row.title)}" maxlength="160"></label><label>Section content<textarea class="site-content-body" rows="6" maxlength="5000">${esc(row.body)}</textarea></label><div class="form-actions"><button class="small-btn save-site-content" type="button">Save section</button><span class="content-save-message"></span></div></div>`).join("")||"<p class='muted'>No editable sections found.</p>";
+  contentList.querySelectorAll(".save-site-content").forEach(btn=>btn.addEventListener("click",async()=>{
+    const row=btn.closest(".site-content-row"),slug=row.dataset.slug,title=row.querySelector(".site-content-input").value.trim(),body=row.querySelector(".site-content-body").value.trim(),msg=row.querySelector(".content-save-message");
+    if(!title||!body){msg.textContent="Title and content are required.";return;}
+    btn.disabled=true;msg.textContent="Saving…";
+    const {error}=await db.from("site_content").update({title,body,updated_at:new Date().toISOString()}).eq("slug",slug);
+    btn.disabled=false;msg.textContent=error?error.message:"Saved ✓";setTimeout(()=>msg.textContent="",1800);
+  }));
 }
 
 boot();

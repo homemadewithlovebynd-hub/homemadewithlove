@@ -115,3 +115,23 @@ document.getElementById("logout-customer").onclick=async()=>{await db.auth.signO
 async function updateAuthButton(){const {data:{session}}=await db.auth.getSession();document.getElementById("auth-button").textContent=session?"♙ My Account":"♙ Login / Sign up";} db.auth.onAuthStateChange(()=>updateAuthButton());
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
 loadProducts();renderCart();updateAuthButton();
+
+/* Site navigation and editable content */
+const sideMenu=document.getElementById("side-menu"),menuOverlay=document.getElementById("menu-overlay");
+function setMenu(open){sideMenu.classList.toggle("open",open);menuOverlay.classList.toggle("hidden",!open);sideMenu.setAttribute("aria-hidden",String(!open));document.getElementById("menu-button").setAttribute("aria-expanded",String(open));}
+document.getElementById("menu-button").onclick=()=>setMenu(true);document.getElementById("menu-close").onclick=()=>setMenu(false);menuOverlay.onclick=()=>setMenu(false);document.querySelectorAll(".side-nav a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
+const searchPanel=document.getElementById("search-panel"),searchInput=document.getElementById("site-search");
+document.getElementById("search-button").onclick=()=>{searchPanel.classList.remove("hidden");searchInput.focus();};document.getElementById("search-close").onclick=()=>searchPanel.classList.add("hidden");
+searchInput.addEventListener("input",()=>{const q=searchInput.value.trim().toLowerCase();document.querySelectorAll("#product-grid .product-card").forEach(card=>{card.style.display=!q||card.textContent.toLowerCase().includes(q)?"":"none";});});
+document.querySelectorAll("[data-jump-category]").forEach(a=>a.addEventListener("click",()=>{const c=a.dataset.jumpCategory;document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.category===c));category=c;render();}));
+document.getElementById("orders-account-button")?.addEventListener("click",()=>document.getElementById("auth-button").click());
+function renderRichText(target,text){const el=document.getElementById(target);if(!el)return;el.innerHTML=String(text||"").split(/\n\s*\n/).map(p=>`<p>${esc(p).replace(/\n/g,"<br>")}</p>`).join("");}
+async function loadSiteContent(){
+  const {data,error}=await db.from("site_content").select("slug,title,body");
+  if(error){console.warn("Site content table not available yet:",error.message);return;}
+  const map=Object.fromEntries((data||[]).map(x=>[x.slug,x]));
+  ["about","return-policy","contact-us","shipping-policy","terms-of-service"].forEach(slug=>{const row=map[slug];if(!row)return;const title=document.getElementById(`${slug}-title`);if(title)title.textContent=row.title;renderRichText(`${slug}-content`,row.body);});
+  const orderRow=map.orders;if(orderRow){const sec=document.querySelector('[data-content-section="orders"]');if(sec){sec.querySelector("h2").textContent=orderRow.title;const card=sec.querySelector(".content-card");card.innerHTML=`<div class="rich-content"><p>${esc(orderRow.body).replace(/\n/g,"<br>")}</p></div><button class="btn primary" id="orders-account-button" type="button">Open My Account</button>`;document.getElementById("orders-account-button").onclick=()=>document.getElementById("auth-button").click();}}
+  const trackRow=map["track-order"];if(trackRow){const sec=document.querySelector('[data-content-section="track-order"]');if(sec){sec.querySelector("h2").textContent=trackRow.title;const card=sec.querySelector(".content-card");card.innerHTML=`<div class="rich-content"><p>${esc(trackRow.body).replace(/\n/g,"<br>")}</p></div><a class="btn primary" href="https://wa.me/${cfg.WHATSAPP_NUMBER}" target="_blank" rel="noopener">Contact us on WhatsApp</a>`;}}
+}
+loadSiteContent();
