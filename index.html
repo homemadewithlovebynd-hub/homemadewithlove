@@ -17,7 +17,7 @@
       <span>⌕</span><input id="header-site-search" type="search" placeholder="Search for chocolates, cookies, snacks..." aria-label="Search products">
     </div>
     <div class="nav-actions reference-actions">
-      <a class="header-admin-link" href="admin.html" aria-label="Admin">Admin</a><button id="auth-button" class="header-icon-action" type="button" aria-label="Account">♙</button>
+      <button id="auth-button" class="header-icon-action" type="button" aria-label="Account">♙</button>
       <button class="header-icon-action wishlist-action" type="button" aria-label="Wishlist">♡</button>
       <button id="cart-button" class="header-cart" type="button" aria-label="Cart">🛒 <span id="cart-count">0</span></button>
     </div>
@@ -25,7 +25,7 @@
 </header>
 
 <aside id="side-menu" class="side-menu reference-side-menu" aria-hidden="false">
-  <div class="sidebar-logo-wrap"><img src="brand-logo.png" alt="handmadewithlove by Neha" class="sidebar-logo"></div>
+  <div class="sidebar-logo-wrap"><img src="brand-logo-transparent.png" alt="handmadewithlove by Neha" class="sidebar-logo"></div>
   <div class="side-menu-head"><button id="menu-close" class="icon-button" type="button" aria-label="Close menu">×</button></div>
   <nav class="side-nav reference-side-nav" aria-label="Shop menu">
     <a class="active" href="#home">⌂ <span>Home</span></a>
@@ -112,6 +112,6 @@
 
 <div id="auth-overlay" class="modal-overlay hidden"><section class="auth-modal"><button id="auth-close" class="modal-close" type="button">×</button><div id="auth-login"><p class="eyebrow">WELCOME</p><h2>Login to your account</h2><p class="muted">Save your details for easier ordering.</p><form id="login-form"><label>Email<input id="customer-email" type="email" required autocomplete="email"></label><label>Password<input id="customer-password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary full" type="submit">Login</button><button id="show-signup" class="text-btn center" type="button">New here? Create an account</button><p id="customer-login-message" class="form-message"></p></form></div><div id="auth-signup" class="hidden"><p class="eyebrow">CREATE ACCOUNT</p><h2>Join handmadewithlove</h2><p class="muted">Create a simple account for faster future orders.</p><form id="signup-form"><label>Your name<input id="signup-name" type="text" required maxlength="80" autocomplete="name"></label><label>Email<input id="signup-email" type="email" required autocomplete="email"></label><label>Password<input id="signup-password" type="password" required minlength="8" autocomplete="new-password"></label><button class="btn primary full" type="submit">Create account</button><button id="show-login" class="text-btn center" type="button">Already have an account? Login</button><p id="customer-signup-message" class="form-message"></p></form></div><div id="auth-account" class="hidden"><p class="eyebrow">MY ACCOUNT</p><h2 id="account-name">Hello!</h2><p id="account-email" class="muted"></p><button id="logout-customer" class="btn secondary full" type="button">Sign out</button></div></section></div>
 
-<footer class="reference-footer"><div class="footer-copy"><span>© 2026 handmadewithlove by Neha.</span><small>All rights reserved.</small></div><img src="brand-logo.png" alt="handmadewithlove by Neha" class="footer-logo"><div class="footer-social"><span>Follow us</span><a href="#" aria-label="WhatsApp">◔</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="Facebook">f</a></div></footer>
+<footer class="reference-footer"><div class="footer-copy"><span>© 2026 handmadewithlove by Neha.</span><small>All rights reserved.</small><a class="footer-admin-link" href="admin.html">Admin</a></div><img src="brand-logo-transparent.png" alt="handmadewithlove by Neha" class="footer-logo"><div class="footer-social"><span>Follow us</span><a href="#" aria-label="WhatsApp">◔</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="Facebook">f</a></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="app.js"></script>
 </body></html>
