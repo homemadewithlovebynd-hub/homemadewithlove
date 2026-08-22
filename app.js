@@ -123,6 +123,8 @@ document.getElementById("menu-button").onclick=()=>setMenu(true);document.getEle
 const searchPanel=document.getElementById("search-panel"),searchInput=document.getElementById("site-search");
 document.getElementById("search-button").onclick=()=>{searchPanel.classList.remove("hidden");searchInput.focus();};document.getElementById("search-close").onclick=()=>searchPanel.classList.add("hidden");
 searchInput.addEventListener("input",()=>{const q=searchInput.value.trim().toLowerCase();document.querySelectorAll("#product-grid .product-card").forEach(card=>{card.style.display=!q||card.textContent.toLowerCase().includes(q)?"":"none";});});
+const headerSearch=document.getElementById("header-site-search");
+headerSearch?.addEventListener("input",()=>{const q=headerSearch.value.trim().toLowerCase();document.querySelectorAll("#product-grid .product-card").forEach(card=>{card.style.display=!q||card.textContent.toLowerCase().includes(q)?"":"none";});});
 document.querySelectorAll("[data-jump-category]").forEach(a=>a.addEventListener("click",()=>{const c=a.dataset.jumpCategory;document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.category===c));category=c;render();}));
 document.getElementById("orders-account-button")?.addEventListener("click",()=>document.getElementById("auth-button").click());
 function renderRichText(target,text){const el=document.getElementById(target);if(!el)return;el.innerHTML=String(text||"").split(/\n\s*\n/).map(p=>`<p>${esc(p).replace(/\n/g,"<br>")}</p>`).join("");}

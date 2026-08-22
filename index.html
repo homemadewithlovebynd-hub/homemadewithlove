@@ -10,36 +10,40 @@
 <body>
 <div class="announcement">Freshly made in small batches <span>•</span> Order your favourites on WhatsApp</div>
 
-<header class="topbar">
-  <div class="container nav">
+<header class="topbar reference-topbar">
+  <div class="reference-header">
     <button id="menu-button" class="icon-button menu-button" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
-    <a class="brand brand-image" href="#home" aria-label="handmadewithlove by Neha"><img src="logo.png" alt="handmadewithlove by Neha"></a>
-    <div class="nav-actions">
-      <button id="search-button" class="icon-button search-button" type="button" aria-label="Search">⌕</button>
-      <button id="auth-button" class="login-button" type="button">My Account</button>
-      <button id="cart-button" class="cart-button" type="button">Cart <span id="cart-count">0</span></button>
+    <div id="search-button" class="header-search" role="button" tabindex="0" aria-label="Search products">
+      <span>⌕</span><input id="header-site-search" type="search" placeholder="Search for chocolates, cookies, snacks..." aria-label="Search products">
+    </div>
+    <div class="nav-actions reference-actions">
+      <button id="auth-button" class="header-icon-action" type="button" aria-label="Account">♙</button>
+      <button class="header-icon-action wishlist-action" type="button" aria-label="Wishlist">♡</button>
+      <button id="cart-button" class="header-cart" type="button" aria-label="Cart">🛒 <span id="cart-count">0</span></button>
     </div>
   </div>
 </header>
 
-<aside id="side-menu" class="side-menu" aria-hidden="true">
-  <div class="side-menu-head">
-    <strong>handmadewithlove</strong>
-    <button id="menu-close" class="icon-button" type="button" aria-label="Close menu">×</button>
-  </div>
-  <nav class="side-nav" aria-label="Shop menu">
-    <a href="#home">Home</a>
-    <a href="#orders">Orders</a>
-    <a href="#track-order">Track your order</a>
-    <a href="#products">Products</a>
-    <a href="#return-policy">Return Policy</a>
-    <a href="#about">About us</a>
-    <a href="#contact-us">Contact us</a>
-    <a href="#shipping-policy">Shipping Policy</a>
-    <a href="#terms-of-service">Terms of Service</a>
+<aside id="side-menu" class="side-menu reference-side-menu" aria-hidden="false">
+  <div class="sidebar-logo-wrap"><img src="brand-logo.png" alt="handmadewithlove by Neha" class="sidebar-logo"></div>
+  <div class="side-menu-head"><button id="menu-close" class="icon-button" type="button" aria-label="Close menu">×</button></div>
+  <nav class="side-nav reference-side-nav" aria-label="Shop menu">
+    <a class="active" href="#home">⌂ <span>Home</span></a>
+    <a href="#orders">♧ <span>Orders</span></a>
+    <a href="#track-order">⌖ <span>Track your order</span></a>
+    <a href="#products">▦ <span>Products</span></a>
+    <a href="#return-policy">♢ <span>Return Policy</span></a>
+    <a href="#about">♡ <span>About us</span></a>
+    <a href="#contact-us">♧ <span>Contact us</span></a>
+    <a href="#shipping-policy">▱ <span>Shipping Policy</span></a>
+    <a href="#terms-of-service">▤ <span>Terms of Service</span></a>
   </nav>
+  <div class="sidebar-love">♡<br><span>Made with love</span></div>
 </aside>
 <div id="menu-overlay" class="menu-overlay hidden"></div>
+
+<div id="search-panel" class="search-panel hidden"><div class="container search-inner"><input id="site-search" type="search" placeholder="Search products…" aria-label="Search products"><button id="search-close" class="icon-button" type="button" aria-label="Close search">×</button></div></div>
+<div id="arrival-runner" class="arrival-runner hidden"><div class="arrival-track" id="arrival-track"></div></div>
 
 <div id="search-panel" class="search-panel hidden">
   <div class="container search-inner">
@@ -48,32 +52,34 @@
   </div>
 </div>
 
-<div id="arrival-runner" class="arrival-runner hidden"><div class="arrival-track" id="arrival-track"></div></div>
 
-<main id="home">
-  <section class="hero">
-    <div class="hero-inner container">
-      <div class="hero-copy-wrap">
-        <span class="hero-kicker">FRESH • HANDMADE • PREMIUM</span>
-        <h1>Handmade<br>goodness,<br><em>made with love.</em></h1>
-        <p class="hero-copy">Delicious treats crafted with the finest ingredients and lots of love.</p>
-        <div class="hero-actions"><a class="btn primary" href="#products">Shop our treats <span>→</span></a><a class="hero-link" href="#about">Our story</a></div>
-        <div class="hero-points"><span>✓ Small batches</span><span>✓ Freshly prepared</span><span>✓ Easy WhatsApp ordering</span></div>
-      </div>
-      <div class="hero-art" aria-label="Handmade treats">
-        <div class="hero-card hero-card-one"><span>🍫</span><strong>Chocolate</strong><small>Rich & indulgent</small></div>
-        <div class="hero-card hero-card-two"><span>🍪</span><strong>Cookies</strong><small>Freshly baked</small></div>
-        <div class="hero-card hero-card-three"><span>🥨</span><strong>Snacks</strong><small>Traditional favourites</small></div>
-        <div class="hero-seal">HANDMADE<br><b>WITH LOVE</b></div>
-      </div>
+<main id="home" class="reference-home">
+  <section class="hero reference-hero">
+    <div class="reference-hero-copy">
+      <span class="hero-kicker">FRESH <b>•</b> HANDMADE <b>•</b> PREMIUM</span>
+      <h1>Handmade<br>goodness,<br><em>made with love.</em> <span class="hero-heart">♡</span></h1>
+      <p class="hero-copy">Delicious treats crafted with the finest ingredients and lots of love.</p>
+      <a class="btn primary reference-shop-btn" href="#products">Shop Now <span>›</span></a>
+      <div class="hero-dots"><i class="active"></i><i></i><i></i></div>
+    </div>
+    <div class="reference-hero-photo"><img src="hero-food.jpg" alt="Handmade chocolate treats"></div>
+  </section>
+
+  <section class="category-section">
+    <div class="category-heading"><div><h2>Shop by Category <span>♡</span></h2></div><a href="#products">View all products&nbsp; →</a></div>
+    <div class="reference-category-grid">
+      <a href="#products" class="reference-category-card" data-jump-category="Chocolates"><img src="cat-chocolates.jpg" alt="Chocolates"><div class="cat-info"><span class="cat-icon">▣</span><div><strong>Chocolates</strong><small>Rich &amp; indulgent</small></div><b class="cat-arrow">›</b></div></a>
+      <a href="#products" class="reference-category-card" data-jump-category="Cookies"><img src="cat-cookies.jpg" alt="Cookies"><div class="cat-info"><span class="cat-icon">●</span><div><strong>Cookies</strong><small>Freshly baked</small></div><b class="cat-arrow">›</b></div></a>
+      <a href="#products" class="reference-category-card" data-jump-category="Snacks"><img src="cat-snacks.jpg" alt="Snacks"><div class="cat-info"><span class="cat-icon">♢</span><div><strong>Snacks</strong><small>Traditional favourites</small></div><b class="cat-arrow">›</b></div></a>
+      <a href="#products" class="reference-category-card" data-jump-category="New Arrival"><img src="cat-new-arrivals.jpg" alt="New Arrivals"><div class="cat-info"><span class="cat-icon">✦</span><div><strong>New Arrivals</strong><small>Check what's new</small></div><b class="cat-arrow">›</b></div><span class="new-card-badge">New</span></a>
     </div>
   </section>
 
-  <section class="category-strip container" aria-label="Shop by category">
-    <a href="#products" class="category-tile tile-pink" data-jump-category="Chocolates"><span>🍫</span><strong>Chocolates</strong><small>Sweet little indulgences</small></a>
-    <a href="#products" class="category-tile tile-cream" data-jump-category="Cookies"><span>🍪</span><strong>Cookies</strong><small>Freshly baked goodness</small></a>
-    <a href="#products" class="category-tile tile-green" data-jump-category="Snacks"><span>🥨</span><strong>Snacks</strong><small>Homemade savoury bites</small></a>
-    <a href="#products" class="category-tile tile-yellow" data-jump-category="New Arrival"><span>✨</span><strong>New Arrivals</strong><small>Our latest creations</small></a>
+  <section class="reference-features">
+    <div><span class="feature-icon leaf">◒</span><div><strong>Handmade</strong><small>Made with<br>fresh ingredients</small></div></div>
+    <div><span class="feature-icon heart">♡</span><div><strong>Made with Love</strong><small>Every order is packed<br>with care</small></div></div>
+    <div><span class="feature-icon shield">♢</span><div><strong>Hygienic &amp; Safe</strong><small>Prepared in a clean<br>environment</small></div></div>
+    <div><span class="feature-icon whatsapp">◔</span><div><strong>Easy Ordering</strong><small>Place your order<br>on WhatsApp</small></div></div>
   </section>
 
   <section id="products" class="products-section container">
@@ -113,6 +119,6 @@
 
 <div id="auth-overlay" class="modal-overlay hidden"><section class="auth-modal"><button id="auth-close" class="modal-close" type="button">×</button><div id="auth-login"><p class="eyebrow">WELCOME</p><h2>Login to your account</h2><p class="muted">Save your details for easier ordering.</p><form id="login-form"><label>Email<input id="customer-email" type="email" required autocomplete="email"></label><label>Password<input id="customer-password" type="password" required minlength="8" autocomplete="current-password"></label><button class="btn primary full" type="submit">Login</button><button id="show-signup" class="text-btn center" type="button">New here? Create an account</button><p id="customer-login-message" class="form-message"></p></form></div><div id="auth-signup" class="hidden"><p class="eyebrow">CREATE ACCOUNT</p><h2>Join handmadewithlove</h2><p class="muted">Create a simple account for faster future orders.</p><form id="signup-form"><label>Your name<input id="signup-name" type="text" required maxlength="80" autocomplete="name"></label><label>Email<input id="signup-email" type="email" required autocomplete="email"></label><label>Password<input id="signup-password" type="password" required minlength="8" autocomplete="new-password"></label><button class="btn primary full" type="submit">Create account</button><button id="show-login" class="text-btn center" type="button">Already have an account? Login</button><p id="customer-signup-message" class="form-message"></p></form></div><div id="auth-account" class="hidden"><p class="eyebrow">MY ACCOUNT</p><h2 id="account-name">Hello!</h2><p id="account-email" class="muted"></p><button id="logout-customer" class="btn secondary full" type="button">Sign out</button></div></section></div>
 
-<footer><div class="container footer-inner"><div><strong>handmadewithlove by Neha</strong><br><span>Made with love. Shared with joy.</span></div><div class="footer-links"><a href="#products">Products</a><a href="#about">About us</a><a href="#contact-us">Contact us</a><a class="admin-link" href="admin.html">Admin</a></div><span>© <span id="year"></span> handmadewithlove by Neha</span></div></footer>
+<footer class="reference-footer"><div class="footer-copy"><span>© 2026 handmadewithlove by Neha.</span><small>All rights reserved.</small></div><img src="brand-logo.png" alt="handmadewithlove by Neha" class="footer-logo"><div class="footer-social"><span>Follow us</span><a href="#" aria-label="WhatsApp">◔</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="Facebook">f</a></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="app.js"></script>
 </body></html>
