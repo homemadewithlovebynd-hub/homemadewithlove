@@ -1,6 +1,7 @@
-const { createClient } = supabase;
+const supabaseLib = window.supabase;
+const createClient = supabaseLib?.createClient;
 const cfg = window.SHOP_CONFIG || {};
-const db = (cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY && !String(cfg.SUPABASE_URL).includes("PASTE_YOUR"))
+const db = (createClient && cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY && !String(cfg.SUPABASE_URL).includes("PASTE_YOUR"))
   ? createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY)
   : null;
 const grid = document.getElementById("product-grid");
@@ -9,7 +10,7 @@ let products = [];
 let category = "All";
 let cart = JSON.parse(localStorage.getItem("homemadewithlove_cart") || "{}");
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const yearEl=document.getElementById("year"); if(yearEl) yearEl.textContent=new Date().getFullYear();
 function saveCart(){localStorage.setItem("homemadewithlove_cart",JSON.stringify(cart));renderCart();}
 function cartCount(){return Object.values(cart).reduce((s,i)=>s+i.qty,0);}
 function cartTotal(){return Object.values(cart).reduce((s,i)=>s+i.price*i.qty,0);}
